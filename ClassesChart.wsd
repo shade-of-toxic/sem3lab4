@@ -1,0 +1,78 @@
+@startuml Library
+
+enum EditionType {
+  Undefined = 0
+  Learning  = 1
+  Scientific = 2
+  Fiction   = 3
+}
+
+class BookEdition
+{
+  #m_author : std::string
+  #m_title : std::string
+  #m_year : long
+  #m_publisher : std::string
+  #m_numberOfCopies : size_t
+  #m_editionType : EditionType
+  +operator<<(ostream, BookEdition)
+  +getEditionType()
+  +getNumberOfCopies()
+  +setNumberOfCopies()
+}
+
+BookEdition::m_editionType --> EditionType
+
+
+class LearningEdition {
+  #m_editionType = Learning
+  -m_courceTitle : std::string
+  -m_groupsIndexes : long[8]
+  +getCourceTitle()
+  +setCourceTitle(std::string)
+  +getGroups()
+  +operator[](long groupIndex)
+  +removeGroup(long groupIndex)
+  +erase(size_t index)
+}
+
+LearningEdition::m_editionType --> EditionType::Learning
+
+BookEdition <|-- LearningEdition
+
+
+class ScientificEdition {
+  #m_editionType = Scientific
+  -m_courceTitles : std::string[3]
+  +getCourceTitles()
+  +operator[](size_t index)
+  +eraseCource(size_t index)
+  +operator<<(std::string cource)
+}
+
+ScientificEdition::m_editionType --> EditionType::Scientific
+
+BookEdition <|-- ScientificEdition
+
+
+class FictionEdition {
+  #m_editionType = Fiction
+  #m_subject : std::string
+  +getSubject()
+}
+
+FictionEdition::m_editionType --> EditionType::Fiction
+
+BookEdition <|-- FictionEdition
+
+
+class Table {
+  m_editions : std::map<long, BookEdition*>
+  operator<<(std::pair<long cifer, BookEdition*>)
+  operator[](long cifer)
+  erase(long cifer)
+  operator<<(ostream, Table)
+}
+
+Table::BookEdition --> BookEdition
+@enduml
