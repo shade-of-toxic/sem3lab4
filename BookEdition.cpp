@@ -13,6 +13,14 @@ BookEdition::BookEdition()
 {
 }
 
+BookEdition::BookEdition(BookEdition&& other)
+    : m_author{std::move(other.m_author)}, m_title{std::move(other.m_title)},
+      m_year{other.m_year}, m_publisher{std::move(other.m_publisher)},
+      m_numberOfCopies{other.m_numberOfCopies}, m_editionType{
+                                                    other.m_editionType}
+{
+}
+
 BookEdition::BookEdition(std::string const& author, std::string const& title,
                          long year, std::string const& publisher,
                          size_t numberOfCopies)

@@ -21,6 +21,7 @@ public:
                   size_t numberOfCopies, std::string const& courceTitle,
                   long groupsIndexes[], size_t numberOfGroups);
   LearningEdition(LearningEdition const& other);
+  LearningEdition(LearningEdition&& other) = default;
   std::string const& getCourceTitle() const;
   std::string const& setCourceTitle(std::string const& title);
   long const* getGroups() const;

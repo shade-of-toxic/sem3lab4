@@ -34,11 +34,31 @@ Table::TableItem::TableItem(long acode, BookEdition const& abook)
     break;
   }
 }
-Table::TableItem::TableItem(long acode, BookEdition*&& abook)
+
+Table::TableItem::TableItem(long acode, BookEdition&& abook)
     : code{acode}, next{nullptr}
 {
-  book = abook;
-  abook = nullptr;
+  switch (abook.getEditionType())
+  {
+  case Undefined:
+    book = new BookEdition(std::move(abook));
+    break;
+  case Learning:
+
+    book = new LearningEdition(std::move(*(LearningEdition*)&abook));
+    break;
+  case Scientific:
+
+    book = new ScientificEdition(std::move(*(ScientificEdition*)&abook));
+    break;
+  case Fiction:
+
+    book = new FictionEdition(std::move(*(FictionEdition*)&abook));
+    break;
+  }
+  // std::swap(*book, abook);
+  // book = &abook;
+  // abook = nullptr;
 }
 
 Table::TableItem& Table::TableItem::operator=(Table::TableItem const& other)

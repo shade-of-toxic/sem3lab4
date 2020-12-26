@@ -5,14 +5,14 @@
 
 enum EditionType
 {
-  Undefined = 0,
-  Learning = 1,
+  Undefined  = 0,
+  Learning   = 1,
   Scientific = 2,
-  Fiction = 3
+  Fiction    = 3
 };
 
-char const* const ETypeStrings[] = {"Undefined", "Learning",
-                                             "Scientific", "Fiction"};
+char const* const ETypeStrings[] = {"Undefined", "Learning", "Scientific",
+                                    "Fiction"};
 
 class BookEdition
 {
@@ -29,6 +29,8 @@ protected:
 
 public:
   BookEdition();
+  BookEdition(BookEdition&&);
+  BookEdition(BookEdition const&) = default;
   BookEdition(std::string const& author, std::string const& title, long year,
               std::string const& publisher, size_t numberOfCopies);
   friend std::ostream& operator<<(std::ostream&, BookEdition const&);

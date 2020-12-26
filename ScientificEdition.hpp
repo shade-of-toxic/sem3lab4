@@ -20,6 +20,7 @@ public:
                     size_t numberOfCopies, std::string const courceTitles[],
                     size_t numberOfCources);
   ScientificEdition(ScientificEdition const& other);
+  ScientificEdition(ScientificEdition&& other) = default;
   size_t getNumberOfCources() const;
   std::string const* getCourceTitles() const;
   std::string getCourceTitlesAsString() const;

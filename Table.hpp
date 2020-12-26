@@ -16,7 +16,8 @@ private:
     TableItem* next;
     constexpr TableItem(long acode = 0);
     TableItem(long acode, BookEdition const& abook);
-    TableItem(long acode, BookEdition*&& abook);
+    TableItem(long acode, BookEdition&& abook);
+    //TableItem(long acode, BookEdition* abook);
     TableItem(TableItem const&) = delete;
     TableItem(TableItem&&);
     TableItem& operator=(TableItem const& other);

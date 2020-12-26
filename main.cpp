@@ -33,7 +33,7 @@ int main(int argc, char const* argv[])
   std::cout << *tab[6];
   tab[7] =
       ScientificEdition{"someauth77", "sometitle777", -100, "somepbl77", 77};
-  tab[7] = c;
+  tab[7] = std::move(d);
   (*tab[7])++;
   std::cout << "\n\n+++++++\n\n"
             << tab[7]->getNumberOfCopies() << " != " << c.getNumberOfCopies()
