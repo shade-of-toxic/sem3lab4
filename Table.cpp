@@ -201,7 +201,7 @@ void Table::open(std::string filename)
   delete m_beforeFirst->next;
   m_beforeFirst->next = nullptr;
   m_numberOfEditions  = 0;
-  while (!file.eof())
+  while (!file.eof() && !file.bad())
   {
     long code;
     file >> code;

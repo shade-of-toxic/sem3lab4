@@ -5,14 +5,13 @@
 #include "Table.hpp"
 #include <fstream>
 
-using namespace std::string_literals;
 
 int main(int argc, char const* argv[])
 {
   std::string b;
   std::cin >> b;
 
-  BookEdition a{b, ""s, 1l, ""s, 2ul};
+  BookEdition a{b, "", 1l, "", 2ul};
   b = "1234";
   FictionEdition c{"1214", "title", 1299, "pub", 12, "New Year"};
   ScientificEdition d{"someauth", "sometitle", -100, "somepbl", 9999};
