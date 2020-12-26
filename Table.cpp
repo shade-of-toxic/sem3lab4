@@ -34,6 +34,12 @@ Table::TableItem::TableItem(long acode, BookEdition const& abook)
     break;
   }
 }
+Table::TableItem::TableItem(long acode, BookEdition*&& abook)
+    : code{acode}, next{nullptr}
+{
+  book = abook;
+  abook = nullptr;
+}
 
 Table::TableItem& Table::TableItem::operator=(Table::TableItem const& other)
 {
@@ -122,7 +128,7 @@ Table& Table::operator<<(Table::TableItem&& item)
   return *this;
 }
 
-BookEdition*& Table::operator[](long key)
+BookEditionWrapper Table::operator[](long key)
 {
   auto prev = m_beforeFirst;
   for (auto i = 0ul; i < size(); i++)
@@ -139,7 +145,7 @@ BookEdition*& Table::operator[](long key)
     m_numberOfEditions++;
   }
 
-  return prev->next->book;
+  return *(prev->next);
 }
 BookEdition Table::erase(long key)
 {

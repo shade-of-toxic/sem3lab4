@@ -31,21 +31,33 @@ int main(int argc, char const* argv[])
   tab << KeyVal(1, c);
   tab << KeyVal(6, a);
   std::cout << *tab[6];
+  tab[7] =
+      ScientificEdition{"someauth77", "sometitle777", -100, "somepbl77", 77};
+  tab[7] = c;
+  (*tab[7])++;
+  std::cout << "\n\n+++++++\n\n"
+            << tab[7]->getNumberOfCopies() << " != " << c.getNumberOfCopies()
+            << "\n\n+++++++\n\n"
+            << ((FictionEdition&)tab[7]).operator++(0).getNumberOfCopies() << " == " << tab[7]->getNumberOfCopies();
+  /*
+  problem solved using concepts and wrapper implemented
   // pretty much the same thing as make_edition
   tab[7] = new ScientificEdition{"someauth77", "sometitle777", -100,
-                                 "somepbl77", 77};
-  // even though make_edition allocates on the heap inside we won't lose pointer
-  // bcause now Table object owns it. it will care about memory freeing for us
-  // but still there is a problem when you are trying to replace existing pointer
-  // so firstly we need to deallocate memory pointed to by previous pointer
-  if(tab[7]) {
+                                 "somepbl77", 77};*/
+  // even though make_edition allocates on the heap inside we won't lose
+  // pointer bcause now Table object owns it. it will care about memory
+  // freeing for us but still there is a problem when you are trying to
+  // replace existing pointer so firstly we need to deallocate memory
+  // pointed to by previous pointer
+  /*if(tab[7]) {
     delete tab[7];
   // or do it by erase()
     // tab.erase(7);
   }
-  tab[7] = make_edition<ScientificEdition>("someauth77", "sometitle777", -100l,
-                                           "somepbl77", 77ul);
-
+  tab[7] = make_edition<ScientificEdition>("someauth77", "sometitle777",
+  -100l, "somepbl77", 77ul);
+  */
+  // tab[7] = &d;
 
   tab.save("table.csv");
   tab.open("table.csv");
