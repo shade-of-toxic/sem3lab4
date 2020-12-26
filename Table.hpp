@@ -50,12 +50,6 @@ Table::TableItem KeyVal(long key, Edition_t const& val)
   return Table::TableItem{key, val};
 }
 
-// template <typename Edition_t, typename... Initializers>
-// Edition_t* make_edition(Initializers... inits)
-// {
-//   return new Edition_t{inits...};
-// }
-
 template <typename _Ty>
 concept not_reference = !std::is_reference_v<_Ty>;
 
