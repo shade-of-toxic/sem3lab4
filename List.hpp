@@ -1,3 +1,6 @@
+#ifndef LIST_HPP
+#define LIST_HPP
+
 #include <concepts>
 #include <vector>
 
@@ -39,29 +42,19 @@ class poly_list
     }
 
     ListItem& operator=(ListItem const& other) = delete;
-    ListItem& operator                         =(ListItem&& other)
-    {
-      delete item;
-      item       = other.item;
-      other.item = nullptr;
-    }
-    ~ListItem()
-    {
-      delete item;
-      delete next;
-    }
+    ListItem& operator                         =(ListItem&& other);
+    ~ListItem();
   };
 
+public:
   class forward_iterator
   {
     ListItem* m_item;
-
-    // friend ListItem* poly_list::getPrevItem(forward_iterator it);
     friend class poly_list;
+    forward_iterator(poly_list::ListItem* it) : m_item{it} {}
 
   public:
-    forward_iterator(poly_list::ListItem* it) : m_item{it} {}
-    forward_iterator& operator++()
+    inline forward_iterator& operator++()
     {
       m_item = m_item->next;
       return *this;
@@ -72,13 +65,13 @@ class poly_list
       m_item = m_item->next;
       return ret;
     }
-    BaseClass*& operator*() { return m_item->next->item; }
-    BaseClass* operator->() { return m_item->next->item; }
-    inline bool operator==(forward_iterator other)
+    inline BaseClass*& operator*() const { return m_item->next->item; }
+    inline BaseClass* operator->() const { return m_item->next->item; }
+    inline bool operator==(forward_iterator other) const
     {
       return m_item == other.m_item;
     }
-    inline bool operator!=(forward_iterator other)
+    inline bool operator!=(forward_iterator other) const
     {
       return m_item != other.m_item;
     }
@@ -88,10 +81,9 @@ class poly_list
     ListItem const* m_item;
 
     friend class poly_list;
-    // friend ListItem const* poly_list::getPrevItem(const_forward_iterator it);
+    const_forward_iterator(poly_list::ListItem const* it) : m_item{it} {}
 
   public:
-    const_forward_iterator(poly_list::ListItem const* it) : m_item{it} {}
     const_forward_iterator& operator++()
     {
       m_item = m_item->next;
@@ -103,24 +95,26 @@ class poly_list
       m_item = m_item->next;
       return ret;
     }
-    BaseClass const* operator*() { return m_item->next->item; }
-    BaseClass const* operator->() { return m_item->next->item; }
-    inline bool operator==(const_forward_iterator other)
+    BaseClass const* operator*() const { return m_item->next->item; }
+    BaseClass const* operator->() const { return m_item->next->item; }
+    inline bool operator==(const_forward_iterator other) const
     {
       return m_item == other.m_item;
     }
-    inline bool operator!=(const_forward_iterator other)
+    inline bool operator!=(const_forward_iterator other) const
     {
       return m_item != other.m_item;
     }
   };
+
+private:
   ListItem* m_rend;
   ListItem* m_rbegin;
   size_t m_size;
 
 public:
-  constexpr poly_list() : m_rend{new ListItem}, m_rbegin{m_rend}, m_size{0} {};
-  ~poly_list() { delete m_rend; }
+  constexpr poly_list();
+  ~poly_list();
 
   inline size_t size() const { return m_size; }
   template <std::derived_from<BaseClass> Derived>
@@ -139,30 +133,7 @@ public:
     m_rbegin       = m_rbegin->next;
     return m_rbegin->item;
   }
-  void pop(size_t index)
-  {
-    if (index >= size())
-      throw std::out_of_range("Index was out of range.");
-    auto prev = m_rend;
-    m_size--;
-    for (auto i = 0ul; i < index; i++)
-    {
-      prev = prev->next;
-    }
-    if (prev->next == m_rbegin)
-    {
-      delete prev->next;
-      prev->next = nullptr;
-      m_rbegin   = prev;
-    }
-    else
-    {
-      auto tmp         = prev->next->next;
-      prev->next->next = nullptr;
-      delete prev->next;
-      prev->next = tmp;
-    }
-  }
+  void pop(size_t index);
   template <std::derived_from<BaseClass> Derived>
   BaseClass* insert(size_t index, Derived&& item)
   {
@@ -186,6 +157,28 @@ public:
     return prev->next->item;
   }
   template <std::derived_from<BaseClass> Derived>
+  BaseClass* insert(size_t index, Derived const& item)
+  {
+    auto prev = m_rend;
+    m_size++;
+    for (auto i = 0ul; i < index; i++)
+    {
+      prev = prev->next;
+    }
+    if (prev->next != nullptr)
+    {
+      auto tmp         = prev->next;
+      prev->next       = new ListItem{item};
+      prev->next->next = tmp;
+    }
+    else
+    {
+      prev->next = new ListItem{item};
+      m_rbegin   = prev->next;
+    }
+    return prev->next->item;
+  }
+  template <std::derived_from<BaseClass> Derived>
   BaseClass* insert(forward_iterator it, Derived&& item)
   {
     m_size++;
@@ -196,34 +189,25 @@ public:
       m_rbegin = it.m_item->next;
     return *it;
   }
-  BaseClass* operator[](size_t index)
+  template <std::derived_from<BaseClass> Derived>
+  BaseClass* insert(forward_iterator it, Derived const& item)
   {
-    auto prev = m_rend;
-    for (auto i = 0ul; i < index; i++)
-    {
-      prev = prev->next;
-    }
-    return prev->next->item;
+    m_size++;
+    auto tmp              = it.m_item->next;
+    it.m_item->next       = new ListItem{item};
+    it.m_item->next->next = tmp;
+    if (tmp == nullptr)
+      m_rbegin = it.m_item->next;
+    return *it;
   }
-  forward_iterator erase(forward_iterator it)
-  {
-    auto tmp              = it.m_item->next->next;
-    it.m_item->next->next = nullptr;
-    delete it.m_item->next;
-    it.m_item->next = tmp;
-    if (it == end())
-      m_rbegin = tmp;
-    return it;
-  }
-  void clear()
-  {
-    delete m_rend->next;
-    m_rend->next = nullptr;
-    m_rbegin     = m_rend;
-    m_size       = 0;
-  }
-  forward_iterator begin() { return m_rend; }
-  forward_iterator end() { return m_rbegin; }
-  const_forward_iterator begin() const { return m_rend; }
-  const_forward_iterator end() const { return m_rbegin; }
+  BaseClass* operator[](size_t index);
+  forward_iterator erase(forward_iterator it);
+  void clear();
+  inline forward_iterator begin() { return m_rend; }
+  inline forward_iterator end() { return m_rbegin; }
+  inline const_forward_iterator begin() const { return m_rend; }
+  inline const_forward_iterator end() const { return m_rbegin; }
 };
+#include "List.cpp"
+
+#endif // LIST_HPP

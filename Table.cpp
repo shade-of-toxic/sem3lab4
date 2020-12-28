@@ -18,6 +18,26 @@ BookEdition*& Table::operator[](long key)
 
   return *it;
 }
+BookEdition const* Table::at(long key) const
+{
+  auto it = m_list.begin();
+  for (; it != m_list.end(); it++)
+    if (key <= it->getCode())
+      break;
+  if (it == m_list.end() || it->getCode() != key)
+    throw std::out_of_range("Key not found!");
+  return *it;
+}
+BookEdition*& Table::at(long key)
+{
+  auto it = m_list.begin();
+  for (; it != m_list.end(); it++)
+    if (key <= it->getCode())
+      break;
+  if (it == m_list.end() || it->getCode() != key)
+    throw std::out_of_range("Key not found!");
+  return *it;
+}
 void Table::erase(long key)
 {
   for (auto it = m_list.begin(); it != m_list.end(); it++)

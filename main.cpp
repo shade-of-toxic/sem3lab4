@@ -25,13 +25,14 @@ int main(int argc, char const* argv[])
   // std::vector<Table::KeyVal_t> vec{{2, &a}, {-3, &c}, {5, &d}};
   //Table tab{vec};
   Table tab;
+  std::cout << "\nd = " << d;
   tab.add(std::move(a));
-  tab.add(std::move(d));
+  tab.add(d);
   tab.add(std::move(c));
   std::cout << '\n' << *tab[14];
   tab[6];
   tab[-4];
-
+  std::cout << "\nd = " << d;
   // for (auto i : vec)
   //   std::cout << i.first << " "; // copy check
   // tab << KeyVal(-5, d);
