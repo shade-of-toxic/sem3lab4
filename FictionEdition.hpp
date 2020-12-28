@@ -12,7 +12,7 @@ public:
   FictionEdition(std::string const& author,
                                  std::string const& title, long year,
                                  std::string const& publisher,
-                                 size_t numberOfCopies,
+                                 size_t numberOfCopies, long code,
                                  std::string const& subject);
   FictionEdition(FictionEdition const& other);
   std::string const& getSubject();

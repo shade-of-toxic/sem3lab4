@@ -13,12 +13,12 @@ private:
 public:
   ScientificEdition(std::string const& author, std::string const& title,
                     long year, std::string const& publisher,
-                    size_t numberOfCopies,
+                    size_t numberOfCopies, long code,
                     std::vector<std::string> const& courceTitles = {});
   ScientificEdition(std::string const& author, std::string const& title,
                     long year, std::string const& publisher,
-                    size_t numberOfCopies, std::string const courceTitles[],
-                    size_t numberOfCources);
+                    size_t numberOfCopies, long code,
+                    std::string const courceTitles[], size_t numberOfCources);
   ScientificEdition(ScientificEdition const& other);
   size_t getNumberOfCources() const;
   std::string const* getCourceTitles() const;

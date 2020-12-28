@@ -3,9 +3,9 @@
 FictionEdition::FictionEdition(std::string const& author,
                                std::string const& title, long year,
                                std::string const& publisher,
-                               size_t numberOfCopies,
+                               size_t numberOfCopies, long code,
                                std::string const& subject)
-    : BookEdition{author, title, year, publisher, numberOfCopies, Fiction}
+    : BookEdition{author, title, year, publisher, numberOfCopies, code, Fiction}
 {
   m_subject = subject;
 }

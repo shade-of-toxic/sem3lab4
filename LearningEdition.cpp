@@ -4,10 +4,10 @@
 LearningEdition::LearningEdition(std::string const& author,
                                  std::string const& title, long year,
                                  std::string const& publisher,
-                                 size_t numberOfCopies,
+                                 size_t numberOfCopies, long code,
                                  std::string const& courceTitle,
                                  std::vector<long> groupsIndexes)
-    : BookEdition{author, title, year, publisher, numberOfCopies, Learning}
+    : BookEdition{author, title, year, publisher, numberOfCopies, code, Learning}
 {
   if (groupsIndexes.size() > 8)
     throw std::runtime_error("Too many groups. Expected 8 at most.");
@@ -20,10 +20,10 @@ LearningEdition::LearningEdition(std::string const& author,
 LearningEdition::LearningEdition(std::string const& author,
                                  std::string const& title, long year,
                                  std::string const& publisher,
-                                 size_t numberOfCopies,
+                                 size_t numberOfCopies, long code,
                                  std::string const& courceTitle,
                                  long groupsIndexes[], size_t numberOfGroups)
-    : BookEdition{author, title, year, publisher, numberOfCopies, Learning}
+    : BookEdition{author, title, year, publisher, numberOfCopies, code, Learning}
 {
   if (numberOfGroups > 8)
     throw std::runtime_error("Too many groups. Expected 8 at most.");

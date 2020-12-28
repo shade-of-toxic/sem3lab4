@@ -28,8 +28,7 @@ void add_Edition(Table& tb)
   std::getline(std::cin, editionType, ';');
   if (editionType == ETypeStrings[Undefined])
   {
-    tb << KeyVal(code,
-                 BookEdition{title, author, year, publisher, numberOfCopies});
+    tb.add(BookEdition{title, author, year, publisher, numberOfCopies, code});
   }
   else if (editionType == ETypeStrings[Learning])
   {
@@ -44,8 +43,8 @@ void add_Edition(Table& tb)
       std::cin >> groups[i];
       std::cin.get();
     }
-    tb << KeyVal(code,
-                 LearningEdition{title, author, year, publisher, numberOfCopies,
+    tb.add(
+                 LearningEdition{title, author, year, publisher, numberOfCopies, code,
                                  cource, groups, ngroups});
   }
   else if (editionType == ETypeStrings[Scientific])
@@ -56,15 +55,15 @@ void add_Edition(Table& tb)
     std::cin.get();
     for (auto i = 0ul; i < ncources; i++)
       std::getline(std::cin, cources[i], ';');
-    tb << KeyVal(code, ScientificEdition{title, author, year, publisher,
-                                         numberOfCopies, cources, ncources});
+    tb.add(ScientificEdition{title, author, year, publisher,
+                                         numberOfCopies, code, cources, ncources});
   }
   else if (editionType == ETypeStrings[Fiction])
   {
     std::string subject;
     std::getline(std::cin, subject, ';');
-    tb << KeyVal(code, FictionEdition{title, author, year, publisher,
-                                      numberOfCopies, subject});
+    tb.add(FictionEdition{title, author, year, publisher,
+                                      numberOfCopies, code, subject});
   }
   else
   {
@@ -108,7 +107,7 @@ void remove_Edition(Table& tb)
   std::cin >> code;
   try
   {
-    std::cout << "Removed: " << tb.erase(code) << std::endl;
+    //std::cout << "Removed: " << tb.erase(code) << std::endl;
   }
   catch (std::out_of_range& e)
   {

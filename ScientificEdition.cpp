@@ -3,9 +3,9 @@
 
 ScientificEdition::ScientificEdition(
     std::string const& author, std::string const& title, long year,
-    std::string const& publisher, size_t numberOfCopies,
+    std::string const& publisher, size_t numberOfCopies, long code,
     std::vector<std::string> const& courceTitles)
-    : BookEdition{author, title, year, publisher, numberOfCopies, Scientific}
+    : BookEdition{author, title, year, publisher, numberOfCopies, code, Scientific}
 {
   if (courceTitles.size() > 3)
     throw std::runtime_error("Too many cources. Expected 3 at most.");
@@ -17,10 +17,10 @@ ScientificEdition::ScientificEdition(
 ScientificEdition::ScientificEdition(std::string const& author,
                                      std::string const& title, long year,
                                      std::string const& publisher,
-                                     size_t numberOfCopies,
+                                     size_t numberOfCopies, long code,
                                      std::string const courceTitles[],
                                      size_t numberOfCources)
-    : BookEdition{author, title, year, publisher, numberOfCopies, Scientific}
+    : BookEdition{author, title, year, publisher, numberOfCopies, code, Scientific}
 {
   if (numberOfCources > 3)
     throw std::runtime_error("Too many cources. Expected 3 at most.");

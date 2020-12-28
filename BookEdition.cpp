@@ -8,15 +8,16 @@ std::ostream& operator<<(std::ostream& stream, EditionType type)
   return stream << ETypeStrings[(uint16_t)type];
 }
 
-BookEdition::BookEdition()
-    : m_year{0}, m_numberOfCopies{0}, m_editionType{Undefined}
+BookEdition::BookEdition(long code)
+    : m_year{0}, m_numberOfCopies{0}, m_editionType{Undefined}, m_code{code}
 {
 }
 
 BookEdition::BookEdition(std::string const& author, std::string const& title,
                          long year, std::string const& publisher,
-                         size_t numberOfCopies)
-    : m_year{year}, m_numberOfCopies{numberOfCopies}, m_editionType{Undefined}
+                         size_t numberOfCopies, long code)
+    : m_year{year}, m_numberOfCopies{numberOfCopies},
+      m_editionType{Undefined}, m_code{code}
 {
   m_author    = author;
   m_title     = title;
@@ -25,8 +26,10 @@ BookEdition::BookEdition(std::string const& author, std::string const& title,
 
 BookEdition::BookEdition(std::string const& author, std::string const& title,
                          long year, std::string const& publisher,
-                         size_t numberOfCopies, EditionType editionType)
-    : m_year{year}, m_numberOfCopies{numberOfCopies}, m_editionType{editionType}
+                         size_t numberOfCopies, long code,
+                         EditionType editionType)
+    : m_year{year}, m_numberOfCopies{numberOfCopies},
+      m_editionType{editionType}, m_code{code}
 {
   m_author    = author;
   m_title     = title;
@@ -35,17 +38,17 @@ BookEdition::BookEdition(std::string const& author, std::string const& title,
 
 std::ostream& operator<<(std::ostream& stream, BookEdition const& book)
 {
-  return stream << std::setw(15) << book.m_author << ";" << std::setw(15)
-                << book.m_title << ";" << std::setw(15) << book.m_year << ";"
-                << std::setw(15) << book.m_publisher << ";" << std::setw(15)
-                << book.m_numberOfCopies << ";" << std::setw(15)
-                << book.m_editionType << "\n";
+  return stream << std::setw(5) << book.m_code << std::setw(15) << book.m_author
+                << ";" << std::setw(15) << book.m_title << ";" << std::setw(15)
+                << book.m_year << ";" << std::setw(15) << book.m_publisher
+                << ";" << std::setw(15) << book.m_numberOfCopies << ";"
+                << std::setw(15) << book.m_editionType << "\n";
 }
 
 std::ostream& BookEdition::output(std::ostream& stream) const
 {
-  return stream << m_author << ";" << m_title << ";" << m_year << ";"
-                << m_publisher << ";" << m_numberOfCopies << ";"
+  return stream << m_code << ";" << m_author << ";" << m_title << ";" << m_year
+                << ";" << m_publisher << ";" << m_numberOfCopies << ";"
                 << m_editionType << ";";
 }
 
