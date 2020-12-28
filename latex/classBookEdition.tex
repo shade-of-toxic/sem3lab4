@@ -1,0 +1,81 @@
+\hypertarget{classBookEdition}{}\doxysection{Book\+Edition Class Reference}
+\label{classBookEdition}\index{BookEdition@{BookEdition}}
+
+
+Inheritance diagram for Book\+Edition\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classBookEdition__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBookEdition_a0663d44a16eb5cf3cfed786954485043}\label{classBookEdition_a0663d44a16eb5cf3cfed786954485043}} 
+{\bfseries Book\+Edition} (std\+::string const \&author, std\+::string const \&title, long year, std\+::string const \&publisher, size\+\_\+t number\+Of\+Copies)
+\item 
+\mbox{\Hypertarget{classBookEdition_ad98bf75c76695f6a2979fbf6c1f02b31}\label{classBookEdition_ad98bf75c76695f6a2979fbf6c1f02b31}} 
+virtual std\+::ostream \& {\bfseries output} (std\+::ostream \&stream) const
+\item 
+\mbox{\Hypertarget{classBookEdition_af9f07a075d7bfbf59694dc851354398e}\label{classBookEdition_af9f07a075d7bfbf59694dc851354398e}} 
+Edition\+Type {\bfseries get\+Edition\+Type} () const
+\item 
+\mbox{\Hypertarget{classBookEdition_ab06b30f4bbdcc397d938088c6af6a71a}\label{classBookEdition_ab06b30f4bbdcc397d938088c6af6a71a}} 
+size\+\_\+t {\bfseries get\+Number\+Of\+Copies} () const
+\item 
+\mbox{\Hypertarget{classBookEdition_aaa968f3d6410ec768cc8be28db094381}\label{classBookEdition_aaa968f3d6410ec768cc8be28db094381}} 
+size\+\_\+t {\bfseries set\+Number\+Of\+Copies} (size\+\_\+t nc)
+\item 
+\mbox{\Hypertarget{classBookEdition_af4c6d15e99d3c02eae44791cf40d12a8}\label{classBookEdition_af4c6d15e99d3c02eae44791cf40d12a8}} 
+\mbox{\hyperlink{classBookEdition}{Book\+Edition}} \& {\bfseries operator++} ()
+\item 
+\mbox{\Hypertarget{classBookEdition_a96e265d332095a8dfdb88840cb2c7f52}\label{classBookEdition_a96e265d332095a8dfdb88840cb2c7f52}} 
+\mbox{\hyperlink{classBookEdition}{Book\+Edition}} \& {\bfseries operator++} (int)
+\item 
+\mbox{\Hypertarget{classBookEdition_a1d823e4947fb7472d57baab6de8d9fe2}\label{classBookEdition_a1d823e4947fb7472d57baab6de8d9fe2}} 
+\mbox{\hyperlink{classBookEdition}{Book\+Edition}} \& {\bfseries operator-\/-\/} ()
+\item 
+\mbox{\Hypertarget{classBookEdition_ac768e09363b678f654b2efd63f636bf5}\label{classBookEdition_ac768e09363b678f654b2efd63f636bf5}} 
+\mbox{\hyperlink{classBookEdition}{Book\+Edition}} \& {\bfseries operator-\/-\/} (int)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBookEdition_af9631afc6046b90e094e48918f8c2ff1}\label{classBookEdition_af9631afc6046b90e094e48918f8c2ff1}} 
+{\bfseries Book\+Edition} (std\+::string const \&author, std\+::string const \&title, long year, std\+::string const \&publisher, size\+\_\+t number\+Of\+Copies, Edition\+Type edition\+Type)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBookEdition_ae27428a75e8491c9817f48d47f1ca8b0}\label{classBookEdition_ae27428a75e8491c9817f48d47f1ca8b0}} 
+std\+::string {\bfseries m\+\_\+author}
+\item 
+\mbox{\Hypertarget{classBookEdition_a1a5101fff8978702261cb30b1260923a}\label{classBookEdition_a1a5101fff8978702261cb30b1260923a}} 
+std\+::string {\bfseries m\+\_\+title}
+\item 
+\mbox{\Hypertarget{classBookEdition_aefb48b446291ec17693f70dba1ae7ec4}\label{classBookEdition_aefb48b446291ec17693f70dba1ae7ec4}} 
+long {\bfseries m\+\_\+year}
+\item 
+\mbox{\Hypertarget{classBookEdition_a1c29c50c4b2094a1099707625b4b730c}\label{classBookEdition_a1c29c50c4b2094a1099707625b4b730c}} 
+std\+::string {\bfseries m\+\_\+publisher}
+\item 
+\mbox{\Hypertarget{classBookEdition_a3877fc7621e10ab5e4d0e8ac3dff0ce8}\label{classBookEdition_a3877fc7621e10ab5e4d0e8ac3dff0ce8}} 
+size\+\_\+t {\bfseries m\+\_\+number\+Of\+Copies}
+\item 
+\mbox{\Hypertarget{classBookEdition_a70bfe08c70aab6d43148ec70f31b6233}\label{classBookEdition_a70bfe08c70aab6d43148ec70f31b6233}} 
+Edition\+Type {\bfseries m\+\_\+edition\+Type}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBookEdition_ac21feb395b4569e348a36d6aec347588}\label{classBookEdition_ac21feb395b4569e348a36d6aec347588}} 
+std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&, \mbox{\hyperlink{classBookEdition}{Book\+Edition}} const \&)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Book\+Edition.\+hpp\item 
+Book\+Edition.\+cpp\end{DoxyCompactItemize}

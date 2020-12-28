@@ -1,0 +1,287 @@
+\hypertarget{classTable}{}\doxysection{Table Class Reference}
+\label{classTable}\index{Table@{Table}}
+
+
+\mbox{\hyperlink{classTable}{Table}} representation.  
+
+
+
+
+{\ttfamily \#include $<$Table.\+hpp$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classTable_a28649bb6157197b61449c15d089bf73c}{Key\+Val\+\_\+t}} = std\+::pair$<$ long, \mbox{\hyperlink{classBookEdition}{Book\+Edition}} $\ast$ $>$
+\begin{DoxyCompactList}\small\item\em Key-\/\+Value pair type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTable_a049f2e06391781ae255c6698869c4ad1}{Table}} ()
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classTable}{Table}} object (default) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classTable_af6980f19e14d8ec7da809057079c6bd1}{Table}} (std\+::vector$<$ \mbox{\hyperlink{classTable_a28649bb6157197b61449c15d089bf73c}{Key\+Val\+\_\+t}} $>$ books)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classTable}{Table}} object from vector of Key-\/\+Value pairs. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classTable_a9a559f2e7beb37b511ee9f88873164f8}{$\sim$\+Table}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the \mbox{\hyperlink{classTable}{Table}} object -\/ free memory used by list. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classTable_aec548eba07f9b3aebcde324c19e19fde}{size}} () const
+\begin{DoxyCompactList}\small\item\em Returns current table size. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classTable}{Table}} \& \mbox{\hyperlink{classTable_ad6808dc0253f73270ce2a9e5a906e6c1}{operator$<$$<$}} (Table\+Item \&\&keyval)
+\begin{DoxyCompactList}\small\item\em add an element by key. Use \mbox{\hyperlink{classTable_a1284cc715bca62c4a314c2110caac5e2}{Key\+Val()}} helper function to create table item \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBookEditionWrapper}{Book\+Edition\+Wrapper}} \mbox{\hyperlink{classTable_a62a67b36170235945773522e33346bf4}{operator\mbox{[}$\,$\mbox{]}}} (long key)
+\begin{DoxyCompactList}\small\item\em Get table element by index. Returns Wrapper to access element. Creates place in table if key is not found. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBookEdition}{Book\+Edition}} \mbox{\hyperlink{classTable_a79f238a85f09298ffd53b4f1c24daa13}{erase}} (long key)
+\begin{DoxyCompactList}\small\item\em Remove element from table by index. \end{DoxyCompactList}\item 
+std\+::ostream \& \mbox{\hyperlink{classTable_a015ddcb0ac4c33897ab5a6b8f7a60953}{output}} (std\+::ostream \&stream) const
+\begin{DoxyCompactList}\small\item\em Output table to stream (unformated) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTable_a2c5c8c6f41c533a6c56aba4b5a3f4d5f}{save}} (std\+::string file) const
+\begin{DoxyCompactList}\small\item\em Save table to file by name. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTable_a47c2bbf3a9cbbbf47e5bc85cbbb7b8c0}{open}} (std\+::string file)
+\begin{DoxyCompactList}\small\item\em Load table from file by name (csv format) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classTable_ae4c72ba39413bfd24750915022b51ffa}{Book\+Edition\+Wrapper}}
+\begin{DoxyCompactList}\small\item\em Wrapper to access to table element. \end{DoxyCompactList}\item 
+std\+::ostream \& \mbox{\hyperlink{classTable_a7a536269eb759b8097ac4e9679ffc78c}{operator$<$$<$}} (std\+::ostream \&stream, \mbox{\hyperlink{classTable}{Table}} const \&table)
+\begin{DoxyCompactList}\small\item\em Output table to stream (formated) \end{DoxyCompactList}\item 
+{\footnotesize template$<$edition Edition\+\_\+t$>$ }\\Table\+::\+Table\+Item \mbox{\hyperlink{classTable_a1284cc715bca62c4a314c2110caac5e2}{Key\+Val}} (long key, Edition\+\_\+t const \&val)
+\begin{DoxyCompactList}\small\item\em Makes a Key-\/\+Value pair to add to table. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{classTable}{Table}} representation. 
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classTable_a28649bb6157197b61449c15d089bf73c}\label{classTable_a28649bb6157197b61449c15d089bf73c}} 
+\index{Table@{Table}!KeyVal\_t@{KeyVal\_t}}
+\index{KeyVal\_t@{KeyVal\_t}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{KeyVal\_t}{KeyVal\_t}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classTable_a28649bb6157197b61449c15d089bf73c}{Table\+::\+Key\+Val\+\_\+t}} =  std\+::pair$<$long, \mbox{\hyperlink{classBookEdition}{Book\+Edition}}$\ast$$>$}
+
+
+
+Key-\/\+Value pair type. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classTable_a049f2e06391781ae255c6698869c4ad1}\label{classTable_a049f2e06391781ae255c6698869c4ad1}} 
+\index{Table@{Table}!Table@{Table}}
+\index{Table@{Table}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{Table()}{Table()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Table\+::\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classTable}{Table}} object (default) 
+
+\mbox{\Hypertarget{classTable_af6980f19e14d8ec7da809057079c6bd1}\label{classTable_af6980f19e14d8ec7da809057079c6bd1}} 
+\index{Table@{Table}!Table@{Table}}
+\index{Table@{Table}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{Table()}{Table()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Table\+::\+Table (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{classTable_a28649bb6157197b61449c15d089bf73c}{Key\+Val\+\_\+t}} $>$}]{books }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classTable}{Table}} object from vector of Key-\/\+Value pairs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em books} & pairs \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTable_a9a559f2e7beb37b511ee9f88873164f8}\label{classTable_a9a559f2e7beb37b511ee9f88873164f8}} 
+\index{Table@{Table}!````~Table@{$\sim$Table}}
+\index{````~Table@{$\sim$Table}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{$\sim$Table()}{~Table()}}
+{\footnotesize\ttfamily Table\+::$\sim$\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroy the \mbox{\hyperlink{classTable}{Table}} object -\/ free memory used by list. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classTable_a79f238a85f09298ffd53b4f1c24daa13}\label{classTable_a79f238a85f09298ffd53b4f1c24daa13}} 
+\index{Table@{Table}!erase@{erase}}
+\index{erase@{erase}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{erase()}{erase()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classBookEdition}{Book\+Edition}} Table\+::erase (\begin{DoxyParamCaption}\item[{long}]{key }\end{DoxyParamCaption})}
+
+
+
+Remove element from table by index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classBookEdition}{Book\+Edition}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTable_a47c2bbf3a9cbbbf47e5bc85cbbb7b8c0}\label{classTable_a47c2bbf3a9cbbbf47e5bc85cbbb7b8c0}} 
+\index{Table@{Table}!open@{open}}
+\index{open@{open}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}}
+{\footnotesize\ttfamily void Table\+::open (\begin{DoxyParamCaption}\item[{std\+::string}]{file }\end{DoxyParamCaption})}
+
+
+
+Load table from file by name (csv format) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & File name \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTable_ad6808dc0253f73270ce2a9e5a906e6c1}\label{classTable_ad6808dc0253f73270ce2a9e5a906e6c1}} 
+\index{Table@{Table}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classTable}{Table}} \& Table\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{Table\+::\+Table\+Item \&\&}]{item }\end{DoxyParamCaption})}
+
+
+
+add an element by key. Use \mbox{\hyperlink{classTable_a1284cc715bca62c4a314c2110caac5e2}{Key\+Val()}} helper function to create table item 
+
+
+\begin{DoxyParams}{Parameters}
+{\em keyval} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classTable}{Table}}\& 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTable_a62a67b36170235945773522e33346bf4}\label{classTable_a62a67b36170235945773522e33346bf4}} 
+\index{Table@{Table}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classBookEditionWrapper}{Book\+Edition\+Wrapper}} Table\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{long}]{key }\end{DoxyParamCaption})}
+
+
+
+Get table element by index. Returns Wrapper to access element. Creates place in table if key is not found. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classBookEditionWrapper}{Book\+Edition\+Wrapper}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTable_a015ddcb0ac4c33897ab5a6b8f7a60953}\label{classTable_a015ddcb0ac4c33897ab5a6b8f7a60953}} 
+\index{Table@{Table}!output@{output}}
+\index{output@{output}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{output()}{output()}}
+{\footnotesize\ttfamily std\+::ostream \& Table\+::output (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{stream }\end{DoxyParamCaption}) const}
+
+
+
+Output table to stream (unformated) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em stream} & ostream object reference \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::ostream\& 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTable_a2c5c8c6f41c533a6c56aba4b5a3f4d5f}\label{classTable_a2c5c8c6f41c533a6c56aba4b5a3f4d5f}} 
+\index{Table@{Table}!save@{save}}
+\index{save@{save}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily void Table\+::save (\begin{DoxyParamCaption}\item[{std\+::string}]{file }\end{DoxyParamCaption}) const}
+
+
+
+Save table to file by name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & File name \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTable_aec548eba07f9b3aebcde324c19e19fde}\label{classTable_aec548eba07f9b3aebcde324c19e19fde}} 
+\index{Table@{Table}!size@{size}}
+\index{size@{size}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily size\+\_\+t Table\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns current table size. 
+
+\begin{DoxyReturn}{Returns}
+size\+\_\+t 
+\end{DoxyReturn}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classTable_ae4c72ba39413bfd24750915022b51ffa}\label{classTable_ae4c72ba39413bfd24750915022b51ffa}} 
+\index{Table@{Table}!BookEditionWrapper@{BookEditionWrapper}}
+\index{BookEditionWrapper@{BookEditionWrapper}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{BookEditionWrapper}{BookEditionWrapper}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{classBookEditionWrapper}{Book\+Edition\+Wrapper}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Wrapper to access to table element. 
+
+\mbox{\Hypertarget{classTable_a1284cc715bca62c4a314c2110caac5e2}\label{classTable_a1284cc715bca62c4a314c2110caac5e2}} 
+\index{Table@{Table}!KeyVal@{KeyVal}}
+\index{KeyVal@{KeyVal}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{KeyVal}{KeyVal}}
+{\footnotesize\ttfamily template$<$edition Edition\+\_\+t$>$ \\
+Table\+::\+Table\+Item Key\+Val (\begin{DoxyParamCaption}\item[{long}]{key,  }\item[{Edition\+\_\+t const \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Makes a Key-\/\+Value pair to add to table. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Edition\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Edition code \\
+\hline
+{\em val} & Edition object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Table\+::\+Table\+Item 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTable_a7a536269eb759b8097ac4e9679ffc78c}\label{classTable_a7a536269eb759b8097ac4e9679ffc78c}} 
+\index{Table@{Table}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Table@{Table}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream\& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{stream,  }\item[{\mbox{\hyperlink{classTable}{Table}} const \&}]{table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Output table to stream (formated) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em stream} & ostream object reference \\
+\hline
+{\em table} & \mbox{\hyperlink{classTable}{Table}} object const reference \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::ostream\& 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Table.\+hpp\item 
+Table.\+cpp\end{DoxyCompactItemize}
