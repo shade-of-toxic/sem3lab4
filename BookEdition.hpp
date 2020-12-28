@@ -39,8 +39,8 @@ public:
   size_t getNumberOfCopies() const;
   size_t setNumberOfCopies(size_t nc);
   BookEdition& operator++();
-  BookEdition& operator++(int);
+  [[nodiscard("Ignoring created object. Maybe you should use prefix form.")]] BookEdition operator++(int);
   BookEdition& operator--();
-  BookEdition& operator--(int);
+  [[nodiscard("Ignoring created object. Maybe you should use prefix form.")]] BookEdition operator--(int);
 };
 #endif

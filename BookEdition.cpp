@@ -63,18 +63,20 @@ BookEdition& BookEdition::operator++()
   m_numberOfCopies++;
   return *this;
 }
-BookEdition& BookEdition::operator++(int)
+BookEdition BookEdition::operator++(int)
 {
+  auto tmp = BookEdition{*this};
   m_numberOfCopies++;
-  return *this;
+  return tmp;
 }
 BookEdition& BookEdition::operator--()
 {
   m_numberOfCopies--;
   return *this;
 }
-BookEdition& BookEdition::operator--(int)
+BookEdition BookEdition::operator--(int)
 {
+  auto tmp = BookEdition{*this};
   m_numberOfCopies--;
-  return *this;
+  return tmp;
 }

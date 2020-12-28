@@ -12,7 +12,7 @@ private:
 public:
   using forward_iterator       = poly_list<BookEdition>::forward_iterator;
   using const_forward_iterator = poly_list<BookEdition>::const_forward_iterator;
-  constexpr Table() {}
+  inline constexpr Table() {}
   inline size_t size() const { return m_list.size(); };
   BookEdition*& operator[](long key);
   BookEdition const* at(long key) const;

@@ -32,6 +32,7 @@ int main(int argc, char const* argv[])
   std::cout << '\n' << *tab[14];
   tab[6];
   tab[-4];
+  d++; // shows warning due to ignoring the result
   std::cout << "\nd = " << d;
   // for (auto i : vec)
   //   std::cout << i.first << " "; // copy check
