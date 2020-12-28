@@ -15,7 +15,7 @@ int main(int argc, char const* argv[])
   b = "1234";
   FictionEdition c{"1214", "title", 1299, "pub", 12, 7, "New Year"};
   ScientificEdition d{"someauth", "sometitle", -100, "somepbl", 9999, 10};
-  d--;
+  --d;
   std::cout << a << c << d;
 
   d << "cource 1"
