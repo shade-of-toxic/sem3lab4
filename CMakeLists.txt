@@ -25,7 +25,7 @@ add_executable(Lib List.cpp main.cpp BookEdition.cpp FictionEdition.cpp Learning
 add_executable(Dialog List.cpp dialogMain.cpp BookEdition.cpp FictionEdition.cpp LearningEdition.cpp ScientificEdition.cpp Table.cpp)
 add_executable(Tests List.cpp tests.cpp BookEdition.cpp FictionEdition.cpp LearningEdition.cpp ScientificEdition.cpp Table.cpp)
 target_link_libraries(Tests PUBLIC Catch2::Catch2)
-
+target_precompile_headers(Tests PUBLIC catch2/catch.hpp)
 include(CTest)
 include(cmake/Catch.cmake)
 catch_discover_tests(Tests)
