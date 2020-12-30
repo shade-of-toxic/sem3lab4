@@ -1,0 +1,84 @@
+#include "FictionEdition.hpp"
+#include "LearningEdition.hpp"
+#include "ScientificEdition.hpp"
+#include "Table.hpp"
+#include "catch2/catch.hpp"
+#include <sstream>
+
+TEST_CASE("adds items to table & outputs to stream")
+{
+  Table tab;
+  tab.add(BookEdition("abc", "def", 2013, "publ", 3, -14));
+  tab.add(ScientificEdition("ghi", "def", 2010, "publ2", 5, 12, {"c1", "c2"}));
+  tab.add(FictionEdition("fic1", "auth", -10, "publisher1", 2, 11, "sub"));
+  tab.add(LearningEdition("le3", "auth1", 2017, "publisher3", 7, -3, "c4",
+                          {1, 2, 4, 77, 5, 3, 12, 5}));
+  std::stringstream ss;
+  REQUIRE(tab.size() == 4);
+  tab.output(ss);
+  CHECK(ss.str() == R"(-14;abc;def;2013;publ;3;Undefined;
+-3;le3;auth1;2017;publisher3;7;Learning;c4;8;1;2;4;77;5;3;12;5;
+11;fic1;auth;-10;publisher1;2;Fiction;sub;
+12;ghi;def;2010;publ2;5;Scientific;2;c1;c2;
+)");
+}
+
+TEST_CASE("saves & opens from file")
+{
+  Table tab;
+  tab.add(BookEdition("abc", "def", 2013, "publ", 3, -14));
+  tab.add(ScientificEdition("ghi", "def", 2010, "publ2", 5, 12, {"c1", "c2"}));
+  tab.add(FictionEdition("fic1", "auth", -10, "publisher1", 2, 11, "sub"));
+  tab.add(LearningEdition("le3", "auth1", 2017, "publisher3", 7, -3, "c4",
+                          {1, 2, 4, 77, 5, 3, 12, 5}));
+  REQUIRE(tab.size() == 4);
+  std::stringstream ss1, ss2;
+  tab.output(ss1);
+  tab.save("table.csv");
+  tab.open("table.csv");
+  tab.output(ss2);
+  CHECK(ss1.str() == ss2.str());
+}
+
+TEST_CASE("iterates over the table")
+{
+  Table tab;
+  tab.add(BookEdition("abc", "def", 2013, "publ", 3, -14));
+  tab.add(ScientificEdition("ghi", "def", 2010, "publ2", 5, 12, {"c1", "c2"}));
+  tab.add(FictionEdition("fic1", "auth", -10, "publisher1", 2, 11, "sub"));
+  tab.add(LearningEdition("le3", "auth1", 2017, "publisher3", 7, -3, "c4",
+                          {1, 2, 4, 77, 5, 3, 12, 5}));
+  REQUIRE(tab.size() == 4);
+  std::vector<std::string> checkstrings{"-14;abc;def;2013;publ;3;Undefined;",
+"-3;le3;auth1;2017;publisher3;7;Learning;c4;8;1;2;4;77;5;3;12;5;",
+"11;fic1;auth;-10;publisher1;2;Fiction;sub;",
+"12;ghi;def;2010;publ2;5;Scientific;2;c1;c2;"};
+
+  for (int i = 0; auto book : tab)
+  {
+    {
+      std::stringstream ss;
+      book->output(ss);
+      CHECK(ss.str() == checkstrings[i++]);
+    }
+  }
+}
+
+TEST_CASE("removes element by code")
+{
+  Table tab;
+  tab.add(BookEdition("abc", "def", 2013, "publ", 3, -14));
+  tab.add(ScientificEdition("ghi", "def", 2010, "publ2", 5, 12, {"c1", "c2"}));
+  tab.add(FictionEdition("fic1", "auth", -10, "publisher1", 2, 11, "sub"));
+  tab.add(LearningEdition("le3", "auth1", 2017, "publisher3", 7, -3, "c4",
+                          {1, 2, 4, 77, 5, 3, 12, 5}));
+  REQUIRE(tab.size() == 4);
+  tab.erase(11);
+  REQUIRE(tab.size() == 3);
+  std::stringstream ss;
+  tab.output(ss);
+  CHECK(ss.str() == R"(-14;abc;def;2013;publ;3;Undefined;
+-3;le3;auth1;2017;publisher3;7;Learning;c4;8;1;2;4;77;5;3;12;5;
+12;ghi;def;2010;publ2;5;Scientific;2;c1;c2;
+)");
+}

@@ -4,23 +4,17 @@
 #include <concepts>
 #include <vector>
 
-namespace std
-{
-
-template <typename _One, typename... _Others>
-concept same_as_one_of = (same_as<_One, _Others> || ...);
-
-} // namespace std
-
 template <typename BaseClass>
 class poly_list
 {
+
+private:
   struct ListItem
   {
     BaseClass* item;
     ListItem* next;
 
-    constexpr ListItem() : item{nullptr}, next{nullptr} {}
+    inline constexpr ListItem() : item{nullptr}, next{nullptr} {}
     template <std::derived_from<BaseClass> Derived>
     ListItem(Derived const& aitem) : item{new Derived{aitem}}, next{nullptr}
     {
@@ -46,11 +40,18 @@ class poly_list
     ~ListItem();
   };
 
+  ListItem* m_rend;
+  ListItem* m_rbegin;
+  size_t m_size;
+
 public:
   class forward_iterator
   {
+
+  private:
     ListItem* m_item;
     friend class poly_list;
+
     forward_iterator(poly_list::ListItem* it) : m_item{it} {}
 
   public:
@@ -78,6 +79,8 @@ public:
   };
   class const_forward_iterator
   {
+
+  private:
     ListItem const* m_item;
 
     friend class poly_list;
@@ -107,12 +110,6 @@ public:
     }
   };
 
-private:
-  ListItem* m_rend;
-  ListItem* m_rbegin;
-  size_t m_size;
-
-public:
   constexpr poly_list();
   ~poly_list();
 
@@ -202,6 +199,7 @@ public:
   }
   BaseClass* operator[](size_t index);
   forward_iterator erase(forward_iterator it);
+  void remove(BaseClass* item);
   void clear();
   inline forward_iterator begin() { return m_rend; }
   inline forward_iterator end() { return m_rbegin; }

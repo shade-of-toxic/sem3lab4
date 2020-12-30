@@ -1,7 +1,6 @@
 #ifndef LIST_CPP
 #define LIST_CPP
 
-
 #include "List.hpp"
 #include "stdexcept"
 
@@ -78,7 +77,18 @@ poly_list<BaseClass>::erase(poly_list<BaseClass>::forward_iterator it)
   it.m_item->next = tmp;
   if (it == end())
     m_rbegin = tmp;
+  m_size--;
   return it;
+}
+template <typename BaseClass>
+void poly_list<BaseClass>::remove(BaseClass* item)
+{
+  for (auto it = begin(); it != end(); ++it)
+    if (*it == item)
+    {
+      erase(it);
+      break;
+    }
 }
 template <typename BaseClass>
 void poly_list<BaseClass>::clear()
@@ -87,6 +97,5 @@ void poly_list<BaseClass>::clear()
   m_rend->next = nullptr;
   m_rbegin     = m_rend;
   m_size       = 0;
-
 }
 #endif // LIST_CPP

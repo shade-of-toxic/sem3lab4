@@ -107,6 +107,7 @@ void remove_Edition(Table& tb)
   std::cin >> code;
   try
   {
+    tb.erase(code);
     //std::cout << "Removed: " << tb.erase(code) << std::endl;
   }
   catch (std::out_of_range& e)

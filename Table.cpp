@@ -40,12 +40,13 @@ BookEdition*& Table::at(long key)
 }
 void Table::erase(long key)
 {
-  for (auto it = m_list.begin(); it != m_list.end(); it++)
-    if ((*it)->getCode() == key)
+  for (auto item : m_list)
+    if (item->getCode() == key)
     {
-      m_list.erase(it);
+      m_list.remove(item);
       return;
     }
+
   throw std::out_of_range("Key error.");
 }
 std::ostream& operator<<(std::ostream& stream, Table const& table)
