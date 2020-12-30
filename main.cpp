@@ -4,6 +4,7 @@
 #include "ScientificEdition.hpp"
 #include "Table.hpp"
 #include <fstream>
+#include "memleak_test_basic.hpp"
 
 
 int main(int argc, char const* argv[])
