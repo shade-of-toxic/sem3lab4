@@ -11,6 +11,7 @@ poly_list<BaseClass>::ListItem::operator=(ListItem&& other)
   delete item;
   item       = other.item;
   other.item = nullptr;
+  return *this;
 }
 
 template <typename BaseClass>
@@ -57,14 +58,14 @@ void poly_list<BaseClass>::pop(size_t index)
 }
 
 template <typename BaseClass>
-BaseClass* poly_list<BaseClass>::operator[](size_t index)
+BaseClass& poly_list<BaseClass>::operator[](size_t index)
 {
   auto prev = m_rend;
   for (auto i = 0ul; i < index; i++)
   {
     prev = prev->next;
   }
-  return prev->next->item;
+  return *prev->next->item;
 }
 
 template <typename BaseClass>
@@ -81,10 +82,10 @@ poly_list<BaseClass>::erase(poly_list<BaseClass>::forward_iterator it)
   return it;
 }
 template <typename BaseClass>
-void poly_list<BaseClass>::remove(BaseClass* item)
+void poly_list<BaseClass>::remove(BaseClass& item)
 {
   for (auto it = begin(); it != end(); ++it)
-    if (*it == item)
+    if (&*it == &item)
     {
       erase(it);
       break;

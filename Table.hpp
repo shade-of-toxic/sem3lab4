@@ -14,16 +14,16 @@ public:
   using const_forward_iterator = poly_list<BookEdition>::const_forward_iterator;
   inline constexpr Table() {}
   inline size_t size() const { return m_list.size(); };
-  BookEdition*& operator[](long key);
-  BookEdition const* at(long key) const;
-  BookEdition*& at(long key);
+  forward_iterator operator[](long key);
+  const_forward_iterator at(long key) const;
+  forward_iterator at(long key);
   template <std::derived_from<BookEdition> Edition_t>
   void add(Edition_t&& item)
   {
     size_t i = 0;
-    for (auto it : m_list)
+    for (auto &it : m_list)
     {
-      if (item.getCode() < it->getCode())
+      if (item.getCode() < it.getCode())
         break;
       i++;
     }
@@ -33,9 +33,9 @@ public:
   void add(Edition_t const& item)
   {
     size_t i = 0;
-    for (auto it : m_list)
+    for (auto &it : m_list)
     {
-      if (item.getCode() < it->getCode())
+      if (item.getCode() < it.getCode())
         break;
       i++;
     }

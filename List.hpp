@@ -52,21 +52,37 @@ public:
     ListItem* m_item;
     friend class poly_list;
 
-    forward_iterator(poly_list::ListItem* it) : m_item{it} {}
+    inline forward_iterator(poly_list::ListItem* it) : m_item{it} {}
 
   public:
+    forward_iterator& operator=(forward_iterator const& fi) {
+      m_item = fi.m_item;
+      return *this;
+    }
+    template <std::derived_from<BaseClass> Derived>
+    forward_iterator& operator=(Derived const& item)
+    {
+      *m_item->next = ListItem{item};
+      return *this;
+    }
+    template <std::derived_from<BaseClass> Derived>
+    forward_iterator& operator=(Derived&& item)
+    {
+      *m_item->next = ListItem{std::move(item)};
+      return *this;
+    }
     inline forward_iterator& operator++()
     {
       m_item = m_item->next;
       return *this;
     }
-    forward_iterator operator++(int)
+    [[nodiscard]] forward_iterator operator++(int)
     {
       forward_iterator ret{m_item};
       m_item = m_item->next;
       return ret;
     }
-    inline BaseClass*& operator*() const { return m_item->next->item; }
+    inline BaseClass& operator*() const { return *m_item->next->item; }
     inline BaseClass* operator->() const { return m_item->next->item; }
     inline bool operator==(forward_iterator other) const
     {
@@ -84,7 +100,7 @@ public:
     ListItem const* m_item;
 
     friend class poly_list;
-    const_forward_iterator(poly_list::ListItem const* it) : m_item{it} {}
+    inline const_forward_iterator(poly_list::ListItem const* it) : m_item{it} {}
 
   public:
     const_forward_iterator& operator++()
@@ -98,7 +114,7 @@ public:
       m_item = m_item->next;
       return ret;
     }
-    BaseClass const* operator*() const { return m_item->next->item; }
+    BaseClass const& operator*() const { return *m_item->next->item; }
     BaseClass const* operator->() const { return m_item->next->item; }
     inline bool operator==(const_forward_iterator other) const
     {
@@ -115,24 +131,24 @@ public:
 
   inline size_t size() const { return m_size; }
   template <std::derived_from<BaseClass> Derived>
-  BaseClass* push_back(Derived const& elem)
+  BaseClass& push_back(Derived const& elem)
   {
     m_size++;
     m_rbegin->next = new ListItem{elem};
     m_rbegin       = m_rbegin->next;
-    return m_rbegin->item;
+    return *m_rbegin->item;
   }
   template <std::derived_from<BaseClass> Derived>
-  BaseClass* emplace_back(Derived&& elem)
+  BaseClass& emplace_back(Derived&& elem)
   {
     m_size++;
     m_rbegin->next = new ListItem{std::move(elem)};
     m_rbegin       = m_rbegin->next;
-    return m_rbegin->item;
+    return *m_rbegin->item;
   }
   void pop(size_t index);
   template <std::derived_from<BaseClass> Derived>
-  BaseClass* insert(size_t index, Derived&& item)
+  BaseClass& insert(size_t index, Derived&& item)
   {
     auto prev = m_rend;
     m_size++;
@@ -151,10 +167,10 @@ public:
       prev->next = new ListItem{std::move(item)};
       m_rbegin   = prev->next;
     }
-    return prev->next->item;
+    return *prev->next->item;
   }
   template <std::derived_from<BaseClass> Derived>
-  BaseClass* insert(size_t index, Derived const& item)
+  BaseClass& insert(size_t index, Derived const& item)
   {
     auto prev = m_rend;
     m_size++;
@@ -173,10 +189,10 @@ public:
       prev->next = new ListItem{item};
       m_rbegin   = prev->next;
     }
-    return prev->next->item;
+    return *prev->next->item;
   }
   template <std::derived_from<BaseClass> Derived>
-  BaseClass* insert(forward_iterator it, Derived&& item)
+  BaseClass& insert(forward_iterator it, Derived&& item)
   {
     m_size++;
     auto tmp              = it.m_item->next;
@@ -187,7 +203,7 @@ public:
     return *it;
   }
   template <std::derived_from<BaseClass> Derived>
-  BaseClass* insert(forward_iterator it, Derived const& item)
+  BaseClass& insert(forward_iterator it, Derived const& item)
   {
     m_size++;
     auto tmp              = it.m_item->next;
@@ -197,9 +213,9 @@ public:
       m_rbegin = it.m_item->next;
     return *it;
   }
-  BaseClass* operator[](size_t index);
+  BaseClass& operator[](size_t index);
   forward_iterator erase(forward_iterator it);
-  void remove(BaseClass* item);
+  void remove(BaseClass& item);
   void clear();
   inline forward_iterator begin() { return m_rend; }
   inline forward_iterator end() { return m_rbegin; }

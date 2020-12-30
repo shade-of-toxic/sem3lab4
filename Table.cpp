@@ -7,18 +7,18 @@
 #include <iomanip>
 #include <iostream>
 
-BookEdition*& Table::operator[](long key)
+Table::forward_iterator Table::operator[](long key)
 {
   auto it = m_list.begin();
-  for (; it != m_list.end(); it++)
+  for (; it != m_list.end(); ++it)
     if (key <= it->getCode())
       break;
   if (it == m_list.end() || it->getCode() != key)
     m_list.insert(it, BookEdition{key});
 
-  return *it;
+  return it;
 }
-BookEdition const* Table::at(long key) const
+Table::const_forward_iterator Table::at(long key) const
 {
   auto it = m_list.begin();
   for (; it != m_list.end(); it++)
@@ -26,22 +26,22 @@ BookEdition const* Table::at(long key) const
       break;
   if (it == m_list.end() || it->getCode() != key)
     throw std::out_of_range("Key not found!");
-  return *it;
+  return it;
 }
-BookEdition*& Table::at(long key)
+Table::forward_iterator Table::at(long key)
 {
   auto it = m_list.begin();
-  for (; it != m_list.end(); it++)
+  for (; it != m_list.end(); ++it)
     if (key <= it->getCode())
       break;
   if (it == m_list.end() || it->getCode() != key)
     throw std::out_of_range("Key not found!");
-  return *it;
+  return it;
 }
 void Table::erase(long key)
 {
-  for (auto item : m_list)
-    if (item->getCode() == key)
+  for (auto& item : m_list)
+    if (item.getCode() == key)
     {
       m_list.remove(item);
       return;
@@ -51,15 +51,15 @@ void Table::erase(long key)
 }
 std::ostream& operator<<(std::ostream& stream, Table const& table)
 {
-  for (auto item : table.m_list)
-    stream << *item;
+  for (auto &item : table.m_list)
+    stream << item;
   return stream;
 }
 
 std::ostream& Table::output(std::ostream& stream) const
 {
-  for (auto item : m_list)
-    item->output(stream) << "\n";
+  for (auto &item : m_list)
+    item.output(stream) << "\n";
   return stream;
 }
 
