@@ -21,7 +21,7 @@ Table::forward_iterator Table::operator[](long key)
 Table::const_forward_iterator Table::at(long key) const
 {
   auto it = m_list.begin();
-  for (; it != m_list.end(); it++)
+  for (; it != m_list.end(); ++it)
     if (key <= it->getCode())
       break;
   if (it == m_list.end() || it->getCode() != key)

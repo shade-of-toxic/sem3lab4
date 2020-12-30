@@ -214,7 +214,7 @@ public:
       m_rbegin = it.m_item->next;
     return *it;
   }
-  BaseClass& operator[](size_t index);
+  forward_iterator operator[](size_t index);
   forward_iterator erase(forward_iterator it);
   void remove(BaseClass& item);
   void clear();

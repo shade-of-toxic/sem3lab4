@@ -58,14 +58,14 @@ void poly_list<BaseClass>::pop(size_t index)
 }
 
 template <typename BaseClass>
-BaseClass& poly_list<BaseClass>::operator[](size_t index)
+poly_list<BaseClass>::forward_iterator poly_list<BaseClass>::operator[](size_t index)
 {
   auto prev = m_rend;
   for (auto i = 0ul; i < index; i++)
   {
     prev = prev->next;
   }
-  return *prev->next->item;
+  return prev;
 }
 
 template <typename BaseClass>

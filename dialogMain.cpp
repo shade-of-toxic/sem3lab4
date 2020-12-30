@@ -43,9 +43,8 @@ void add_Edition(Table& tb)
       std::cin >> groups[i];
       std::cin.get();
     }
-    tb.add(
-                 LearningEdition{title, author, year, publisher, numberOfCopies, code,
-                                 cource, groups, ngroups});
+    tb.add(LearningEdition{title, author, year, publisher, numberOfCopies, code,
+                           cource, groups, ngroups});
   }
   else if (editionType == ETypeStrings[Scientific])
   {
@@ -55,15 +54,15 @@ void add_Edition(Table& tb)
     std::cin.get();
     for (auto i = 0ul; i < ncources; i++)
       std::getline(std::cin, cources[i], ';');
-    tb.add(ScientificEdition{title, author, year, publisher,
-                                         numberOfCopies, code, cources, ncources});
+    tb.add(ScientificEdition{title, author, year, publisher, numberOfCopies,
+                             code, cources, ncources});
   }
   else if (editionType == ETypeStrings[Fiction])
   {
     std::string subject;
     std::getline(std::cin, subject, ';');
-    tb.add(FictionEdition{title, author, year, publisher,
-                                      numberOfCopies, code, subject});
+    tb.add(FictionEdition{title, author, year, publisher, numberOfCopies, code,
+                          subject});
   }
   else
   {
@@ -76,29 +75,27 @@ void receive_Book(Table& tb)
 {
   long code;
   std::cin >> code;
-  auto& el = tb[code];
-  if (el)
-    ++(*el);
-  else
-  {
-    std::cout << "Edition not found!\n";
-    return;
-  }
-  std::cout << *el << std::endl;
+  auto& el = *tb[code];
+  ++el;
+  // else
+  // {
+  //   std::cout << "Edition not found!\n";
+  //   return;
+  // }
+  std::cout << el << std::endl;
 }
 void borrow_Book(Table& tb)
 {
   long code;
   std::cin >> code;
-  auto& el = tb[code];
-  if (el)
-    --(*el);
-  else
-  {
-    std::cout << "Edition not found!\n";
-    return;
-  }
-  std::cout << *el << std::endl;
+  auto& el = *tb[code];
+  --el;
+  // else
+  // {
+  //   std::cout << "Edition not found!\n";
+  //   return;
+  // }
+  std::cout << el << std::endl;
 }
 void print_Table(Table& tb) { std::cout << tb << std::endl; }
 void remove_Edition(Table& tb)
@@ -108,7 +105,7 @@ void remove_Edition(Table& tb)
   try
   {
     tb.erase(code);
-    //std::cout << "Removed: " << tb.erase(code) << std::endl;
+    // std::cout << "Removed: " << tb.erase(code) << std::endl;
   }
   catch (std::out_of_range& e)
   {
