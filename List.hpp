@@ -55,7 +55,8 @@ public:
     inline forward_iterator(poly_list::ListItem* it) : m_item{it} {}
 
   public:
-    forward_iterator& operator=(forward_iterator const& fi) {
+    inline forward_iterator& operator=(forward_iterator const& fi)
+    {
       m_item = fi.m_item;
       return *this;
     }
@@ -103,19 +104,19 @@ public:
     inline const_forward_iterator(poly_list::ListItem const* it) : m_item{it} {}
 
   public:
-    const_forward_iterator& operator++()
+    inline const_forward_iterator& operator++()
     {
       m_item = m_item->next;
       return *this;
     }
-    const_forward_iterator operator++(int)
+    [[nodiscard]] const_forward_iterator operator++(int)
     {
       const_forward_iterator ret{m_item};
       m_item = m_item->next;
       return ret;
     }
-    BaseClass const& operator*() const { return *m_item->next->item; }
-    BaseClass const* operator->() const { return m_item->next->item; }
+    inline BaseClass const& operator*() const { return *m_item->next->item; }
+    inline BaseClass const* operator->() const { return m_item->next->item; }
     inline bool operator==(const_forward_iterator other) const
     {
       return m_item == other.m_item;
