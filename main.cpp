@@ -4,12 +4,13 @@
 #include "ScientificEdition.hpp"
 #include "Table.hpp"
 #include <fstream>
+
+using namespace std::string_literals;
 namespace std
 {
 #include <malloc.h>
 }
 
-using namespace std::string_literals;
 
 // unavaliable to other translation units
 static long mem_counter = 0;
