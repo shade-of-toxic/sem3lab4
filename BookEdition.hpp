@@ -32,6 +32,7 @@ public:
   BookEdition(long code = 0);
   BookEdition(std::string const& author, std::string const& title, long year,
               std::string const& publisher, size_t numberOfCopies, long code);
+  virtual ~BookEdition() = default;
   friend std::ostream& operator<<(std::ostream&, BookEdition const&);
   virtual std::ostream& output(std::ostream& stream) const;
   inline long getCode() const { return m_code; }

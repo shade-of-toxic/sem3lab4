@@ -27,7 +27,7 @@ public:
   std::string& at(size_t index);
   std::string eraseCource(size_t index);
   ScientificEdition& operator<<(std::string const& cource);
-  virtual std::ostream& output(std::ostream& stream) const;
+  std::ostream& output(std::ostream& stream) const override;
 };
 
 #endif

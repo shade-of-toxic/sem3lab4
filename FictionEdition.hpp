@@ -16,7 +16,7 @@ public:
                                  std::string const& subject);
   FictionEdition(FictionEdition const& other);
   std::string const& getSubject();
-  virtual std::ostream& output(std::ostream& stream) const;
+  std::ostream& output(std::ostream& stream) const override;
 };
 
 #endif
