@@ -25,7 +25,7 @@ void* operator new(size_t size)
   return p;
 }
 
-void operator delete(void* p)
+void operator delete(void* p) noexcept
 {
   long size = static_cast<long>(std::malloc_usable_size(p));
   mem_counter -= size;

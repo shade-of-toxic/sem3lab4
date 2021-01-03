@@ -16,12 +16,9 @@ BookEdition::BookEdition(long code)
 BookEdition::BookEdition(std::string const& author, std::string const& title,
                          long year, std::string const& publisher,
                          size_t numberOfCopies, long code)
-    : m_year{year}, m_numberOfCopies{numberOfCopies},
-      m_editionType{Undefined}, m_code{code}
+    : m_author{author}, m_title{title}, m_year{year}, m_publisher{publisher},
+      m_numberOfCopies{numberOfCopies}, m_editionType{Undefined}, m_code{code}
 {
-  m_author    = author;
-  m_title     = title;
-  m_publisher = publisher;
 }
 
 BookEdition::BookEdition(std::string const& author, std::string const& title,

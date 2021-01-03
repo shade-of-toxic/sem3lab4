@@ -2,15 +2,18 @@
 #define LIST_CPP
 
 #include "List.hpp"
-#include "stdexcept"
+#include <stdexcept>
 
 template <typename BaseClass>
-poly_list<BaseClass>::ListItem&
+typename poly_list<BaseClass>::ListItem&
 poly_list<BaseClass>::ListItem::operator=(ListItem&& other)
 {
   delete item;
   item       = other.item;
   other.item = nullptr;
+  auto tmp   = next;
+  next       = tmp;
+  // next = next ;// stays the same
   return *this;
 }
 
@@ -58,7 +61,7 @@ void poly_list<BaseClass>::pop(size_t index)
 }
 
 template <typename BaseClass>
-poly_list<BaseClass>::forward_iterator
+typename poly_list<BaseClass>::forward_iterator
 poly_list<BaseClass>::operator[](size_t index)
 {
   auto prev = m_rend;
@@ -66,11 +69,11 @@ poly_list<BaseClass>::operator[](size_t index)
   {
     prev = prev->next;
   }
-  return prev;
+  return forward_iterator{prev};
 }
 
 template <typename BaseClass>
-poly_list<BaseClass>::forward_iterator
+typename poly_list<BaseClass>::forward_iterator
 poly_list<BaseClass>::erase(poly_list<BaseClass>::forward_iterator it)
 {
   auto tmp              = it.m_item->next->next;
@@ -104,14 +107,14 @@ void poly_list<BaseClass>::clear()
 template <typename BaseClass>
 poly_list<BaseClass>::ListItem::ListItem(
     std::derived_from<BaseClass> auto&& aitem)
-    : item{new (std::remove_reference_t<decltype(aitem)>){std::move(aitem)}},
+    : item{new (typename std::remove_reference_t<decltype(aitem)>){std::move(aitem)}},
       next{nullptr}
 {
 }
 template <typename BaseClass>
 poly_list<BaseClass>::ListItem::ListItem(
     std::derived_from<BaseClass> auto const& aitem)
-    : item{new (std::remove_reference_t<decltype(aitem)>){aitem}}, next{nullptr}
+    : item{new (typename std::remove_cv_t<std::remove_reference_t<decltype(aitem)>>){aitem}}, next{nullptr}
 {
 }
 
@@ -123,7 +126,7 @@ poly_list<BaseClass>::ListItem::ListItem(ListItem&& other)
 }
 
 template <typename BaseClass>
-poly_list<BaseClass>::forward_iterator&
+typename poly_list<BaseClass>::forward_iterator&
 poly_list<BaseClass>::forward_iterator::operator=(
     std::derived_from<BaseClass> auto const& item)
 {
@@ -132,7 +135,7 @@ poly_list<BaseClass>::forward_iterator::operator=(
 }
 
 template <typename BaseClass>
-poly_list<BaseClass>::forward_iterator&
+typename poly_list<BaseClass>::forward_iterator&
 poly_list<BaseClass>::forward_iterator::operator=(
     std::derived_from<BaseClass> auto&& item)
 {
@@ -140,7 +143,7 @@ poly_list<BaseClass>::forward_iterator::operator=(
   return *this;
 }
 template <typename BaseClass>
-poly_list<BaseClass>::forward_iterator
+typename poly_list<BaseClass>::forward_iterator
 poly_list<BaseClass>::forward_iterator::operator++(int)
 {
   forward_iterator ret{m_item};
@@ -246,7 +249,7 @@ poly_list<BaseClass>::insert(forward_iterator it,
 }
 
 template <typename BaseClass>
-poly_list<BaseClass>::const_forward_iterator
+typename poly_list<BaseClass>::const_forward_iterator
 poly_list<BaseClass>::const_forward_iterator::operator++(int)
 {
   const_forward_iterator ret{m_item};

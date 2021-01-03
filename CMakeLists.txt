@@ -3,27 +3,25 @@ project(Library LANGUAGES CXX)
 
 # Include(FetchContent)
 
-# FetchContent_Declare(
-#   Catch2
-#   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-#   GIT_TAG        v2.13.1)
+# FetchContent_Declare( Catch2 GIT_REPOSITORY
+# https://github.com/catchorg/Catch2.git GIT_TAG        v2.13.1)
 
-# #FetchContent_MakeAvailable(Catch2)
-# FetchContent_GetProperties(Catch2) #mispelled name in original post
-# if(NOT Catch2_POPULATED)
-#   FetchContent_Populate(Catch2)
-#   message(STATUS "Catch source dir: ${catch2_SOURCE_DIR}")
-#   message(STATUS "Catch binary dir: ${catch2_BINARY_DIR}")
-#   add_subdirectory(${catch2_SOURCE_DIR} ${catch2_BINARY_DIR}) #can be case
-# #insensitive
-# endif()
-#find_package(Catch2 REQUIRED)
+# #FetchContent_MakeAvailable(Catch2) FetchContent_GetProperties(Catch2)
+# #mispelled name in original post if(NOT Catch2_POPULATED)
+# FetchContent_Populate(Catch2) message(STATUS "Catch source dir:
+# ${catch2_SOURCE_DIR}") message(STATUS "Catch binary dir:
+# ${catch2_BINARY_DIR}") add_subdirectory(${catch2_SOURCE_DIR}
+# ${catch2_BINARY_DIR}) #can be case #insensitive endif() find_package(Catch2
+# REQUIRED)
 add_subdirectory(catch2)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++2a -fconcepts")
-add_executable(Lib main.cpp BookEdition.cpp FictionEdition.cpp LearningEdition.cpp ScientificEdition.cpp)
-add_executable(Dialog dialogMain.cpp BookEdition.cpp FictionEdition.cpp LearningEdition.cpp ScientificEdition.cpp)
-add_executable(Tests tests.cpp BookEdition.cpp FictionEdition.cpp LearningEdition.cpp ScientificEdition.cpp)
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++2a")
+add_executable(Lib main.cpp BookEdition.cpp FictionEdition.cpp
+                   LearningEdition.cpp ScientificEdition.cpp)
+add_executable(Dialog dialogMain.cpp BookEdition.cpp FictionEdition.cpp
+                      LearningEdition.cpp ScientificEdition.cpp)
+add_executable(Tests tests.cpp BookEdition.cpp FictionEdition.cpp
+                     LearningEdition.cpp ScientificEdition.cpp)
 target_link_libraries(Tests PUBLIC Catch2::Catch2)
 target_compile_definitions(Tests PRIVATE _VERBOSE=0)
 target_precompile_headers(Tests PUBLIC catch2/catch.hpp)
@@ -31,3 +29,44 @@ include(CTest)
 include(cmake/Catch.cmake)
 catch_discover_tests(Tests)
 add_executable(TestList Test.cpp BookEdition.cpp FictionEdition.cpp)
+
+target_compile_features(
+  Lib
+  PUBLIC cxx_auto_type
+         cxx_attributes
+         cxx_constexpr
+         cxx_decltype
+         cxx_noexcept
+         cxx_override
+         cxx_rvalue_references
+         cxx_std_20)
+target_compile_features(
+  Dialog
+  PUBLIC cxx_auto_type
+         cxx_attributes
+         cxx_constexpr
+         cxx_decltype
+         cxx_noexcept
+         cxx_override
+         cxx_rvalue_references
+         cxx_std_20)
+target_compile_features(
+  Tests
+  PUBLIC cxx_auto_type
+         cxx_attributes
+         cxx_constexpr
+         cxx_decltype
+         cxx_noexcept
+         cxx_override
+         cxx_rvalue_references
+         cxx_std_20)
+target_compile_features(
+  TestList
+  PUBLIC cxx_auto_type
+         cxx_attributes
+         cxx_constexpr
+         cxx_decltype
+         cxx_noexcept
+         cxx_override
+         cxx_rvalue_references
+         cxx_std_20)

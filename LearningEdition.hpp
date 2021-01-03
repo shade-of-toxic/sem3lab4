@@ -6,7 +6,6 @@
 class LearningEdition : public BookEdition
 {
 private:
-  EditionType m_editionType = Learning;
   std::string m_courceTitle;
   long m_groupsIndexes[8];
   size_t m_numberOfGroups;

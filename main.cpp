@@ -3,9 +3,8 @@
 #include "LearningEdition.hpp"
 #include "ScientificEdition.hpp"
 #include "Table.hpp"
-#include <fstream>
 #include "memleak_test_basic.hpp"
-
+#include <fstream>
 
 int main(int argc, char const* argv[])
 {
@@ -17,14 +16,14 @@ int main(int argc, char const* argv[])
   FictionEdition c{"1214", "title", 1299, "pub", 12, 7, "New Year"};
   ScientificEdition d{"someauth", "sometitle", -100, "somepbl", 9999, 10};
   --d;
-  std::cout << a << c << d;
+  std::cout << b << " " << a << " " << c << " " << d;
 
   d << "cource 1"
     << "cource 2"
     << "cource 3";
   std::cout << d.getCourceTitlesAsString();
   // std::vector<Table::KeyVal_t> vec{{2, &a}, {-3, &c}, {5, &d}};
-  //Table tab{vec};
+  // Table tab{vec};
   Table tab;
   std::cout << "\nd = " << d;
   tab.add(std::move(a));
@@ -33,7 +32,8 @@ int main(int argc, char const* argv[])
   std::cout << '\n' << *tab[14];
   tab[6];
   tab[-4];
-  d++; // shows warning due to ignoring the result
+  ++d;
+  // d++; // shows warning due to ignoring the result
   std::cout << "\nd = " << d;
   // for (auto i : vec)
   //   std::cout << i.first << " "; // copy check
@@ -43,19 +43,19 @@ int main(int argc, char const* argv[])
   // std::cout << *tab[6];
   // pretty much the same thing as make_edition
   // tab[7] = new ScientificEdition{"someauth77", "sometitle777", -100,
-                                //  "somepbl77", 77};
+  //  "somepbl77", 77};
   // even though make_edition allocates on the heap inside we won't lose pointer
   // bcause now Table object owns it. it will care about memory freeing for us
-  // but still there is a problem when you are trying to replace existing pointer
-  // so firstly we need to deallocate memory pointed to by previous pointer
-  // if(tab[7]) {
+  // but still there is a problem when you are trying to replace existing
+  // pointer so firstly we need to deallocate memory pointed to by previous
+  // pointer if(tab[7]) {
   //   delete tab[7];
   // // or do it by erase()
   //   // tab.erase(7);
   // }
-  // tab[7] = make_edition<ScientificEdition>("someauth77", "sometitle777", -100l,
-                                          //  "somepbl77", 77ul);
-
+  // tab[7] = make_edition<ScientificEdition>("someauth77", "sometitle777",
+  // -100l,
+  //  "somepbl77", 77ul);
 
   tab.save("table.csv");
   tab.open("table.csv");

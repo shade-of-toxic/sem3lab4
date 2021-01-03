@@ -6,7 +6,6 @@
 class ScientificEdition : public BookEdition
 {
 private:
-  EditionType m_editionType = Scientific;
   std::string m_courceTitles[3];
   size_t m_numberOfCources;
 

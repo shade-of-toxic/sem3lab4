@@ -16,8 +16,8 @@ private:
     ListItem* next;
 
     inline constexpr ListItem() : item{nullptr}, next{nullptr} {}
-    ListItem(std::derived_from<BaseClass> auto const& aitem);
-    ListItem(std::derived_from<BaseClass> auto&& aitem);
+    explicit ListItem(std::derived_from<BaseClass> auto const& aitem);
+    explicit ListItem(std::derived_from<BaseClass> auto&& aitem);
     /**
      * @brief ListItem copying is not allowed due to polymorphism potencial loss
      * 
@@ -43,7 +43,7 @@ public:
     ListItem* m_item;
     friend class poly_list;
 
-    inline forward_iterator(poly_list::ListItem* it) : m_item{it} {}
+    explicit inline forward_iterator(poly_list::ListItem* it) : m_item{it} {}
 
   public:
     inline forward_iterator& operator=(forward_iterator const& fi)
@@ -77,7 +77,7 @@ public:
     ListItem const* m_item;
 
     friend class poly_list;
-    inline const_forward_iterator(poly_list::ListItem const* it) : m_item{it} {}
+    explicit inline const_forward_iterator(poly_list::ListItem const* it) : m_item{it} {}
 
   public:
     inline const_forward_iterator& operator++()
@@ -113,10 +113,10 @@ public:
   forward_iterator erase(forward_iterator it);
   void remove(BaseClass& item);
   void clear();
-  inline forward_iterator begin() { return m_rend; }
-  inline forward_iterator end() { return m_rbegin; }
-  inline const_forward_iterator begin() const { return m_rend; }
-  inline const_forward_iterator end() const { return m_rbegin; }
+  inline forward_iterator begin() { return forward_iterator{m_rend}; }
+  inline forward_iterator end() { return forward_iterator{m_rbegin}; }
+  inline const_forward_iterator begin() const { return const_forward_iterator{m_rend}; }
+  inline const_forward_iterator end() const { return const_forward_iterator{m_rbegin}; }
 };
 #include "List.cpp"
 
