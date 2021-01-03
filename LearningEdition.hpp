@@ -31,7 +31,7 @@ public:
   long& at(size_t index);
   void removeGroup(long groupIndex);
   long erase(size_t index);
-  virtual std::ostream& output(std::ostream& stream) const;
+  std::ostream& output(std::ostream& stream) const override;
 };
 
 #endif

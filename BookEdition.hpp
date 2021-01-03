@@ -33,6 +33,7 @@ public:
   BookEdition(BookEdition const&) = default;
   BookEdition(std::string const& author, std::string const& title, long year,
               std::string const& publisher, size_t numberOfCopies);
+  virtual ~BookEdition() = default;
   friend std::ostream& operator<<(std::ostream&, BookEdition const&);
   virtual std::ostream& output(std::ostream& stream) const;
   EditionType getEditionType() const;
