@@ -150,7 +150,7 @@ int main(int argc, char const* argv[])
     std::cout << optstring;
     std::cin >> ch;
     std::cin.get();
-    if (ch < 0 || ch > 8)
+    if (ch < 1 || ch > 8)
     {
       std::cout << "Try again!\n";
       continue;

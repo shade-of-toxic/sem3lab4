@@ -7,7 +7,8 @@ LearningEdition::LearningEdition(std::string const& author,
                                  size_t numberOfCopies, long code,
                                  std::string const& courceTitle,
                                  std::vector<long> groupsIndexes)
-    : BookEdition{author, title, year, publisher, numberOfCopies, code, Learning}
+    : BookEdition{author,         title, year,    publisher,
+                  numberOfCopies, code,  Learning}
 {
   if (groupsIndexes.size() > 8)
     throw std::runtime_error("Too many groups. Expected 8 at most.");
@@ -23,20 +24,20 @@ LearningEdition::LearningEdition(std::string const& author,
                                  size_t numberOfCopies, long code,
                                  std::string const& courceTitle,
                                  long groupsIndexes[], size_t numberOfGroups)
-    : BookEdition{author, title, year, publisher, numberOfCopies, code, Learning}
+    : BookEdition{author,         title, year,    publisher,
+                  numberOfCopies, code,  Learning},
+      m_courceTitle{courceTitle}, m_numberOfGroups{numberOfGroups}
 {
   if (numberOfGroups > 8)
     throw std::runtime_error("Too many groups. Expected 8 at most.");
-  m_courceTitle    = courceTitle;
-  m_numberOfGroups = numberOfGroups;
   for (auto i = 0ul; i < numberOfGroups; i++)
     m_groupsIndexes[i] = groupsIndexes[i];
 }
 
 LearningEdition::LearningEdition(LearningEdition const& other)
-    : BookEdition{*((BookEdition const*)(&other))}
+    : BookEdition{*((BookEdition const*)(&other))}, m_courceTitle{
+                                                        other.m_courceTitle}
 {
-  m_courceTitle    = other.m_courceTitle;
   m_numberOfGroups = other.m_numberOfGroups;
   for (auto i = 0ul; i < other.m_numberOfGroups; i++)
     m_groupsIndexes[i] = other.m_groupsIndexes[i];

@@ -25,12 +25,9 @@ BookEdition::BookEdition(std::string const& author, std::string const& title,
                          long year, std::string const& publisher,
                          size_t numberOfCopies, long code,
                          EditionType editionType)
-    : m_year{year}, m_numberOfCopies{numberOfCopies},
-      m_editionType{editionType}, m_code{code}
+    : m_author{author}, m_title{title}, m_year{year}, m_publisher{publisher},
+      m_numberOfCopies{numberOfCopies}, m_editionType{editionType}, m_code{code}
 {
-  m_author    = author;
-  m_title     = title;
-  m_publisher = publisher;
 }
 
 std::ostream& operator<<(std::ostream& stream, BookEdition const& book)

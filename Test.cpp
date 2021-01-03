@@ -21,9 +21,9 @@ int main(int argc, char const* argv[])
   }
   list.pop(0);
   // std::cout << list[0];
-  auto & a = *list[0];
-  auto * pa = &a;
-  auto pf = (FictionEdition*)pa;
+  auto& a  = *list[0];
+  auto* pa = &a;
+  auto pf  = (FictionEdition*)pa;
   std::cout << *list[0] << ((pf)->getSubject());
   return 0;
 }
