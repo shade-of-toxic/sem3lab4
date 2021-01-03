@@ -58,7 +58,8 @@ void poly_list<BaseClass>::pop(size_t index)
 }
 
 template <typename BaseClass>
-poly_list<BaseClass>::forward_iterator poly_list<BaseClass>::operator[](size_t index)
+poly_list<BaseClass>::forward_iterator
+poly_list<BaseClass>::operator[](size_t index)
 {
   auto prev = m_rend;
   for (auto i = 0ul; i < index; i++)
@@ -98,5 +99,158 @@ void poly_list<BaseClass>::clear()
   m_rend->next = nullptr;
   m_rbegin     = m_rend;
   m_size       = 0;
+}
+
+template <typename BaseClass>
+poly_list<BaseClass>::ListItem::ListItem(
+    std::derived_from<BaseClass> auto&& aitem)
+    : item{new (std::remove_reference_t<decltype(aitem)>){std::move(aitem)}},
+      next{nullptr}
+{
+}
+template <typename BaseClass>
+poly_list<BaseClass>::ListItem::ListItem(
+    std::derived_from<BaseClass> auto const& aitem)
+    : item{new (std::remove_reference_t<decltype(aitem)>){aitem}}, next{nullptr}
+{
+}
+
+template <typename BaseClass>
+poly_list<BaseClass>::ListItem::ListItem(ListItem&& other)
+    : item{other.item}, next{nullptr}
+{
+  other.item = nullptr;
+}
+
+template <typename BaseClass>
+poly_list<BaseClass>::forward_iterator&
+poly_list<BaseClass>::forward_iterator::operator=(
+    std::derived_from<BaseClass> auto const& item)
+{
+  *m_item->next = ListItem{item};
+  return *this;
+}
+
+template <typename BaseClass>
+poly_list<BaseClass>::forward_iterator&
+poly_list<BaseClass>::forward_iterator::operator=(
+    std::derived_from<BaseClass> auto&& item)
+{
+  *m_item->next = ListItem{std::move(item)};
+  return *this;
+}
+template <typename BaseClass>
+poly_list<BaseClass>::forward_iterator
+poly_list<BaseClass>::forward_iterator::operator++(int)
+{
+  forward_iterator ret{m_item};
+  m_item = m_item->next;
+  return ret;
+}
+template <typename BaseClass>
+BaseClass&
+poly_list<BaseClass>::push_back(std::derived_from<BaseClass> auto const& elem)
+{
+  m_size++;
+  m_rbegin->next = new ListItem{elem};
+  m_rbegin       = m_rbegin->next;
+  return *m_rbegin->item;
+}
+template <typename BaseClass>
+BaseClass&
+poly_list<BaseClass>::emplace_back(std::derived_from<BaseClass> auto&& elem)
+{
+  m_size++;
+  m_rbegin->next = new ListItem{std::move(elem)};
+  m_rbegin       = m_rbegin->next;
+  return *m_rbegin->item;
+}
+template <typename BaseClass>
+BaseClass&
+poly_list<BaseClass>::insert(size_t index,
+                             std::derived_from<BaseClass> auto&& item)
+{
+  auto prev = m_rend;
+  m_size++;
+  for (auto i = 0ul; i < index; i++)
+  {
+    prev = prev->next;
+  }
+  if (prev->next != nullptr)
+  {
+    auto tmp         = prev->next;
+    prev->next       = new ListItem{std::move(item)};
+    prev->next->next = tmp;
+  }
+  else
+  {
+    prev->next = new ListItem{std::move(item)};
+    m_rbegin   = prev->next;
+  }
+  return *prev->next->item;
+}
+template <typename BaseClass>
+BaseClass&
+poly_list<BaseClass>::insert(size_t index,
+                             std::derived_from<BaseClass> auto const& item)
+{
+  auto prev = m_rend;
+  m_size++;
+  for (auto i = 0ul; i < index; i++)
+  {
+    prev = prev->next;
+  }
+  if (prev->next != nullptr)
+  {
+    auto tmp         = prev->next;
+    prev->next       = new ListItem{item};
+    prev->next->next = tmp;
+  }
+  else
+  {
+    prev->next = new ListItem{item};
+    m_rbegin   = prev->next;
+  }
+  return *prev->next->item;
+}
+template <typename BaseClass>
+BaseClass&
+poly_list<BaseClass>::insert(forward_iterator it,
+                             std::derived_from<BaseClass> auto&& item)
+{
+  m_size++;
+  auto tmp = it.m_item->next;
+  // if constexpr() {
+  // static_assert(std::is_rvalue_reference_v<decltype(item)>);
+  // }else if constexpr(std::is_lvalue_reference_v<decltype(item)>) {
+  // static_assert(std::is_lvalue_reference_v<decltype(item)>);
+  // }
+  it.m_item->next       = new ListItem{std::move(item)};
+  it.m_item->next->next = tmp;
+  if (tmp == nullptr)
+    m_rbegin = it.m_item->next;
+  return *it;
+}
+template <typename BaseClass>
+BaseClass&
+poly_list<BaseClass>::insert(forward_iterator it,
+                             std::derived_from<BaseClass> auto const& item)
+{
+  m_size++;
+  auto tmp              = it.m_item->next;
+  it.m_item->next       = new ListItem{item};
+  it.m_item->next->next = tmp;
+  if (tmp == nullptr)
+    m_rbegin = it.m_item->next;
+  return *it;
+}
+
+template <typename BaseClass>
+poly_list<BaseClass>::const_forward_iterator
+poly_list<BaseClass>::const_forward_iterator::operator++(int)
+{
+  const_forward_iterator ret{m_item};
+  m_item = m_item->next;
+  return ret;
 }
 #endif // LIST_CPP

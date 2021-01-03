@@ -131,3 +131,30 @@ TEST_CASE("gets element by code & sets through wrapper")
   }
   CHECK(get_used_mem_size() == pretest_mem);
 }
+
+TEST_CASE("adds element if code was not found")
+{
+  long pretest_mem = get_used_mem_size();
+  {
+    Table tab;
+    tab.add(BookEdition("abc", "def", 2013, "publ", 3, -14));
+    tab.add(
+        ScientificEdition("ghi", "def", 2010, "publ2", 5, 12, {"c1", "c2"}));
+    tab.add(FictionEdition("fic1", "auth", -10, "publisher1", 2, 11, "sub"));
+    tab.add(LearningEdition("le3", "auth1", 2017, "publisher3", 7, -3, "c4",
+                            {1, 2, 4, 77, 5, 3, 12, 5}));
+    REQUIRE(tab.size() == 4);
+    tab[15] =
+        ScientificEdition("qwe", "rty", 2014, "publ5", 8, 15, {"c5", "c6"});
+    REQUIRE(tab.size() == 5);
+    std::stringstream ss;
+    tab.output(ss);
+    CHECK(ss.str() == R"(-14;abc;def;2013;publ;3;Undefined;
+-3;le3;auth1;2017;publisher3;7;Learning;c4;8;1;2;4;77;5;3;12;5;
+11;fic1;auth;-10;publisher1;2;Fiction;sub;
+12;ghi;def;2010;publ2;5;Scientific;2;c1;c2;
+15;qwe;rty;2014;publ5;8;Scientific;2;c5;c6;
+)");
+  }
+  CHECK(get_used_mem_size() == pretest_mem);
+}

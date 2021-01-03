@@ -1,3 +1,6 @@
+#ifndef TABLE_CPP
+#define TABLE_CPP
+
 #include "Table.hpp"
 #include "FictionEdition.hpp"
 #include "LearningEdition.hpp"
@@ -51,14 +54,14 @@ void Table::erase(long key)
 }
 std::ostream& operator<<(std::ostream& stream, Table const& table)
 {
-  for (auto &item : table.m_list)
+  for (auto& item : table.m_list)
     stream << item;
   return stream;
 }
 
 std::ostream& Table::output(std::ostream& stream) const
 {
-  for (auto &item : m_list)
+  for (auto& item : m_list)
     item.output(stream) << "\n";
   return stream;
 }
@@ -137,3 +140,29 @@ void Table::open(std::string filename)
   }
   file.close();
 }
+
+void Table::add(std::derived_from<BookEdition> auto const& item)
+{
+  size_t i = 0;
+  for (auto& it : m_list)
+  {
+    if (item.getCode() < it.getCode())
+      break;
+    i++;
+  }
+  m_list.insert(i, item);
+}
+
+void Table::add(std::derived_from<BookEdition> auto&& item)
+{
+  size_t i = 0;
+  for (auto& it : m_list)
+  {
+    if (item.getCode() < it.getCode())
+      break;
+    i++;
+  }
+  m_list.insert(i, std::move(item));
+}
+
+#endif // TABLE_CPP

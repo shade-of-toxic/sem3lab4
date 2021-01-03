@@ -17,30 +17,8 @@ public:
   forward_iterator operator[](long key);
   const_forward_iterator at(long key) const;
   forward_iterator at(long key);
-  template <std::derived_from<BookEdition> Edition_t>
-  void add(Edition_t&& item)
-  {
-    size_t i = 0;
-    for (auto &it : m_list)
-    {
-      if (item.getCode() < it.getCode())
-        break;
-      i++;
-    }
-    m_list.insert(i, std::move(item));
-  }
-  template <std::derived_from<BookEdition> Edition_t>
-  void add(Edition_t const& item)
-  {
-    size_t i = 0;
-    for (auto &it : m_list)
-    {
-      if (item.getCode() < it.getCode())
-        break;
-      i++;
-    }
-    m_list.insert(i, item);
-  }
+  void add(std::derived_from<BookEdition> auto&& item);
+  void add(std::derived_from<BookEdition> auto const& item);
   void erase(long key);
   friend std::ostream& operator<<(std::ostream& stream, Table const& table);
   std::ostream& output(std::ostream& stream) const;
@@ -51,5 +29,5 @@ public:
   inline const_forward_iterator begin() const { return m_list.begin(); }
   inline const_forward_iterator end() const { return m_list.end(); }
 };
-
+#include "Table.cpp"
 #endif // TABLE_HPP

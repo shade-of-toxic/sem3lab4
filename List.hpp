@@ -2,6 +2,7 @@
 #define LIST_HPP
 
 #include <concepts>
+#include <type_traits>
 #include <vector>
 
 template <typename BaseClass>
@@ -15,28 +16,18 @@ private:
     ListItem* next;
 
     inline constexpr ListItem() : item{nullptr}, next{nullptr} {}
-    template <std::derived_from<BaseClass> Derived>
-    ListItem(Derived const& aitem) : item{new Derived{aitem}}, next{nullptr}
-    {
-    }
-    template <std::derived_from<BaseClass> Derived>
-    ListItem(Derived&& aitem)
-        : item{new Derived{std::move(aitem)}}, next{nullptr}
-    {
-    }
-    template <std::derived_from<BaseClass> Derived>
-    ListItem(ListItem const& other)
-        : item{new Derived{other.item}}, next{nullptr}
-    {
-    }
-    template <std::derived_from<BaseClass> Derived>
-    ListItem(ListItem&& other)
-        : item{new Derived{std::move(other.item)}}, next{nullptr}
-    {
-    }
+    ListItem(std::derived_from<BaseClass> auto const& aitem);
+    ListItem(std::derived_from<BaseClass> auto&& aitem);
+    /**
+     * @brief ListItem copying is not allowed due to polymorphism potencial loss
+     * 
+     * @param other 
+     */
+    ListItem(ListItem const& other) = delete;
+    ListItem(ListItem&& other);
 
     ListItem& operator=(ListItem const& other) = delete;
-    ListItem& operator                         =(ListItem&& other);
+    ListItem& operator=(ListItem&& other);
     ~ListItem();
   };
 
@@ -60,29 +51,14 @@ public:
       m_item = fi.m_item;
       return *this;
     }
-    template <std::derived_from<BaseClass> Derived>
-    forward_iterator& operator=(Derived const& item)
-    {
-      *m_item->next = ListItem{item};
-      return *this;
-    }
-    template <std::derived_from<BaseClass> Derived>
-    forward_iterator& operator=(Derived&& item)
-    {
-      *m_item->next = ListItem{std::move(item)};
-      return *this;
-    }
+    forward_iterator& operator=(std::derived_from<BaseClass> auto const& item);
+    forward_iterator& operator=(std::derived_from<BaseClass> auto&& item);
     inline forward_iterator& operator++()
     {
       m_item = m_item->next;
       return *this;
     }
-    [[nodiscard]] forward_iterator operator++(int)
-    {
-      forward_iterator ret{m_item};
-      m_item = m_item->next;
-      return ret;
-    }
+    [[nodiscard]] forward_iterator operator++(int);
     inline BaseClass& operator*() const { return *m_item->next->item; }
     inline BaseClass* operator->() const { return m_item->next->item; }
     inline bool operator==(forward_iterator other) const
@@ -109,12 +85,7 @@ public:
       m_item = m_item->next;
       return *this;
     }
-    [[nodiscard]] const_forward_iterator operator++(int)
-    {
-      const_forward_iterator ret{m_item};
-      m_item = m_item->next;
-      return ret;
-    }
+    [[nodiscard]] const_forward_iterator operator++(int);
     inline BaseClass const& operator*() const { return *m_item->next->item; }
     inline BaseClass const* operator->() const { return m_item->next->item; }
     inline bool operator==(const_forward_iterator other) const
@@ -131,89 +102,13 @@ public:
   ~poly_list();
 
   inline size_t size() const { return m_size; }
-  template <std::derived_from<BaseClass> Derived>
-  BaseClass& push_back(Derived const& elem)
-  {
-    m_size++;
-    m_rbegin->next = new ListItem{elem};
-    m_rbegin       = m_rbegin->next;
-    return *m_rbegin->item;
-  }
-  template <std::derived_from<BaseClass> Derived>
-  BaseClass& emplace_back(Derived&& elem)
-  {
-    m_size++;
-    m_rbegin->next = new ListItem{std::move(elem)};
-    m_rbegin       = m_rbegin->next;
-    return *m_rbegin->item;
-  }
+  BaseClass& push_back(std::derived_from<BaseClass> auto const& elem);
+  BaseClass& emplace_back(std::derived_from<BaseClass> auto&& elem);
   void pop(size_t index);
-  template <std::derived_from<BaseClass> Derived>
-  BaseClass& insert(size_t index, Derived&& item)
-  {
-    auto prev = m_rend;
-    m_size++;
-    for (auto i = 0ul; i < index; i++)
-    {
-      prev = prev->next;
-    }
-    if (prev->next != nullptr)
-    {
-      auto tmp         = prev->next;
-      prev->next       = new ListItem{std::move(item)};
-      prev->next->next = tmp;
-    }
-    else
-    {
-      prev->next = new ListItem{std::move(item)};
-      m_rbegin   = prev->next;
-    }
-    return *prev->next->item;
-  }
-  template <std::derived_from<BaseClass> Derived>
-  BaseClass& insert(size_t index, Derived const& item)
-  {
-    auto prev = m_rend;
-    m_size++;
-    for (auto i = 0ul; i < index; i++)
-    {
-      prev = prev->next;
-    }
-    if (prev->next != nullptr)
-    {
-      auto tmp         = prev->next;
-      prev->next       = new ListItem{item};
-      prev->next->next = tmp;
-    }
-    else
-    {
-      prev->next = new ListItem{item};
-      m_rbegin   = prev->next;
-    }
-    return *prev->next->item;
-  }
-  template <std::derived_from<BaseClass> Derived>
-  BaseClass& insert(forward_iterator it, Derived&& item)
-  {
-    m_size++;
-    auto tmp              = it.m_item->next;
-    it.m_item->next       = new ListItem{std::move(item)};
-    it.m_item->next->next = tmp;
-    if (tmp == nullptr)
-      m_rbegin = it.m_item->next;
-    return *it;
-  }
-  template <std::derived_from<BaseClass> Derived>
-  BaseClass& insert(forward_iterator it, Derived const& item)
-  {
-    m_size++;
-    auto tmp              = it.m_item->next;
-    it.m_item->next       = new ListItem{item};
-    it.m_item->next->next = tmp;
-    if (tmp == nullptr)
-      m_rbegin = it.m_item->next;
-    return *it;
-  }
+  BaseClass& insert(size_t index, std::derived_from<BaseClass> auto&& item);
+  BaseClass& insert(size_t index, std::derived_from<BaseClass> auto const& item);
+  BaseClass& insert(forward_iterator it, std::derived_from<BaseClass> auto&& item);
+  BaseClass& insert(forward_iterator it, std::derived_from<BaseClass> auto const& item);
   forward_iterator operator[](size_t index);
   forward_iterator erase(forward_iterator it);
   void remove(BaseClass& item);
